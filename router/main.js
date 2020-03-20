@@ -11,9 +11,16 @@ module.exports = function(app)
     });
 
     app.get('/listall', (req, res) => {
-        conn.connection.query('SELECT * FROM malls.malls LIMIT 10', (error, results, fields) => {
+        conn.connection.query('SELECT * FROM malls.malls', (error, results, fields) => {
             if (error) throw error;
             console.log(JSON.stringify(results));
+            res.render('pages/table.ejs', {results: results})
+        });
+    });
+// TODO: Insert function
+    app.get('/insert', (req, res) => {
+        conn.connection.query('SELECT * FROM malls.malls', (error, results, fields) => {
+            
         });
     });
 }

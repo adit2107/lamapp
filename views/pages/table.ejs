@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+
+<head>
+    <title>Mall App</title>
+    <%- include('../partials/head') %>
+</head>
+
+<body class="container-fluid">
+    <header>
+        <%- include('../partials/header') %>
+    </header>
+
+    <table class="table table-bordered table-sm">
+        <thead>
+            <tr>
+                <th scope="col">
+                    #
+                </th>
+                <th scope="col">
+                    Mall Name
+                </th>
+                <th scope="col">
+                    Store List
+                </th>
+                <th scope="col">
+                    Floor
+                </th>
+                <th scope="col">
+                    Category
+                </th>
+                <th scope="col">
+                    Distribution
+                </th>
+                <th scope="col">
+                    Area
+                </th>
+                <th scope="col">
+                    Circle
+                </th>
+                <th scope="col">
+                    Address
+                </th>
+            </tr>
+
+        </thead>
+        <tbody>
+            <% for(var i=0; i < results.length; i++) { %>
+            <tr>
+                <td><%= results[i].serial %></td>
+                <td><%= results[i].mallname %></td>
+                <td><%= results[i].stores %></td>
+                <td><%= results[i].floor %></td>
+                <td><%= results[i].category %></td>
+                <td><%= results[i].distribution %></td>
+                <td><%= results[i].area %></td>
+                <td><%= results[i].circle %></td>
+                <td><%= results[i].address %></td>
+            </tr>
+            <% } %>
+        </tbody>
+    </table>
+</body>
+
+
+</html>
