@@ -8,6 +8,7 @@ require('./router/main')(app);
 // setting view engine
 app.set('views',__dirname + '/views');
 app.set('view engine', 'ejs');
+app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.json() );     
 app.use(bodyParser.urlencoded({     

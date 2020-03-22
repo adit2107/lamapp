@@ -10,11 +10,11 @@ module.exports = function(app)
         res.render('about.ejs');
     });
 
-    app.get('/listall', (req, res) => {
+    app.get('/list', (req, res) => {
         conn.connection.query('SELECT * FROM malls.malls', (error, results, fields) => {
             if (error) throw error;
             console.log(JSON.stringify(results));
-            res.render('pages/table.ejs', {results: results})
+            res.render('pages/list.ejs', {results: results})
         });
     });
 // TODO: Insert function
