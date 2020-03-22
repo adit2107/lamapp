@@ -19,8 +19,6 @@ module.exports = function(app)
     });
 // TODO: Insert function
     app.get('/insert', (req, res) => {
-        conn.connection.query('SELECT * FROM malls.malls', (error, results, fields) => {
-            
-        });
+        
     });
 }
