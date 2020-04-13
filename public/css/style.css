@@ -5,3 +5,7 @@
 thead input {
     width: 100%;
 }
+
+form {
+    margin-top: 25px;
+}
