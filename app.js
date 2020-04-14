@@ -33,8 +33,8 @@ const connection = mysql.createConnection({
 });
   
 
-const server = app.listen(3000, () => {
-    console.log("Server running on 3000!");
+const server = app.listen(3030, () => {
+    console.log("Server running on 3030!");
 })
 
 exports.connection = connection;
