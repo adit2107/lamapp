@@ -37,21 +37,21 @@
         <div class="form-row">
           <div class="form-group col-sm-2">
             <label for="distribution">Distribution</label>
-            <input type="text" class="form-control" id="distribution">
+            <input type="text" class="form-control" id="distribution" name="distribution">
           </div>
           <div class="form-group col-sm-2">
             <label for="inputState">Area</label>
-            <input type="number" step="any" class="form-control" id="area">
+            <input type="number" step="any" class="form-control" id="area" name="area">
           </div>
           <div class="form-group col-sm-2">
             <label for="inputZip">Circle</label>
-            <input type="text" class="form-control" id="circle">
+            <input type="text" class="form-control" id="circle" name="circle">
           </div>  
         </div>
         <div class="form-row">
       <div class="form-group col-sm-6">
         <label for="inputZip">Address</label>
-        <input type="text" class="form-control" id="address">
+        <input type="text" class="form-control" id="address" name="address">
     </div>
   </div>
         <button type="submit" class="btn btn-primary">Insert Record</button>
@@ -64,7 +64,8 @@
 
     let mallsarr = ("<%- mallnames %>").split(',');
     let storesarr = ("<%- stores %>").split(',');
-    let floorarr = [ ...new Set(("<%- floor %>").split(','))];
+    //let floorarr = [ ...new Set(("<%- floor %>").split(','))];
+    let floorarr = ["First","Second","Third","Fourth","Fifth","Sixth","Lower Ground","Upper Ground","Ground"];
     let catearr = ("<%- category %>").split(',');
     let distarr = ("<%- dist %>").split(',');
     let circlearr = ("<%- circle %>").split(',');
@@ -110,7 +111,7 @@
           terms.push( ui.item.value );
           // add placeholder to get the comma-and-space at the end
           terms.push( "" );
-          this.value = terms.join( ", " );
+          this.value = terms.join(", " );
           return false;
         }
   }); 

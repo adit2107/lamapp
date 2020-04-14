@@ -1,5 +1,7 @@
 const conn  = require('../app');
 const auto  = require('../public/js/autocomplete');
+const bodyParser = require('body-parser');
+
 
 function getresults (){
 
@@ -7,6 +9,11 @@ function getresults (){
 
 module.exports = function(app)
 {
+    app.use(bodyParser.json() );     
+
+    app.use(bodyParser.urlencoded({     
+        extended: true
+}));
      app.get('/',function(req,res){
         res.render('pages/index.ejs',{connection: "Connected"})
      });
@@ -21,7 +28,6 @@ module.exports = function(app)
             res.render('pages/list.ejs', {results: results})
         });
     });
-// TODO: Insert function
     app.get('/insert', (req, res) => {
         // retreive arrays
         conn.connection.query('SELECT * FROM malls.malls', (error, results, fields) => {
@@ -47,10 +53,17 @@ module.exports = function(app)
     });
 
     app.post('/insert', (req, res) => {
-        console.log(req.body);
-        // inserting
-        conn.connection.query('', (error, results, fields) => {
 
+        //+ req.body.mallname +','+req.body.stores+','+req.body.floor+','+req.body.category+','+req.body.distribution+','+req.body.area+','+req.body.circle+','+req.body.address+'
+
+        //stores, floor, category, distribution, area, circle, address
+        
+        // inserting
+        console.log(req.body);
+        conn.connection.query('INSERT INTO malls.malls (mallname, stores, floor, category, distribution, area, circle, address) VALUES ("'+req.body.mallname+'","'+req.body.stores+'","'+req.body.floor+'","'+req.body.category+'","'+req.body.distribution+'","'+req.body.area+'","'+req.body.circle+'","'+req.body.address+'")', (error, results, fields) => {
+            if (error) throw error;
+            console.log(results.insertId);
         });
+        res.send("inserted!");
     });
 }
