@@ -12,7 +12,7 @@ app.use(express.static(__dirname + '/public'));
 
 app.use(bodyParser.json() );     
 app.use(bodyParser.urlencoded({     
-  extended: true
+  extended: false
 }));
 
 const connection = mysql.createConnection({

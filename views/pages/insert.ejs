@@ -13,25 +13,25 @@
     <header>
         <%- include('../partials/header') %>
     </header>
-    <form class="md-form">
+    <form class="md-form" method="POST" action="/insert">
         <div class="form-row">
           <div class="form-group col-sm-2">
             <label for="mallname">Mall Name</label>
-            <input type="text" autocomplete="off" class="form-control" id="mallname">
+            <input type="text" autocomplete="off" class="form-control" id="mallname" name="mallname">
           </div>
           <div class="form-group col-sm-2">
             <label for="stores">Store</label>
-            <input type="text" class="form-control" id="stores">
+            <input type="text" class="form-control" id="stores" name="stores">
           </div>
         </div>
         <div class="form-row">
             <div class="form-group col-sm-2">
                 <label for="floor">Floor</label>
-                <input type="text" class="form-control" id="floor">
+                <input type="text" class="form-control" id="floor" name="floor">
               </div>
               <div class="form-group col-sm-2">
                 <label for="category">Category</label>
-                <input type="text" class="form-control" id="category">
+                <input type="text" class="form-control" id="category" name="category">
               </div>
         </div>
         <div class="form-row">
@@ -81,19 +81,48 @@
       $("#mallname").autocomplete({
     source: mallsarr
   }); 
+
   $("#stores").autocomplete({
     source: storesarr
   }); 
-  $("#floor").autocomplete({
-    source: floorarr,
-    multiple: true
+
+  $("#floor").on( "keydown", function( event ) {
+        if ( event.keyCode === $.ui.keyCode.TAB &&
+            $( this ).autocomplete( "instance" ).menu.active ) {
+          event.preventDefault();
+        }
+      }).autocomplete({
+        minLength: 0,
+        source: function( request, response ) {
+          // delegate back to autocomplete, but extract the last term
+          response( $.ui.autocomplete.filter(
+            floorarr, extractLast( request.term ) ) );
+        },
+        focus: function() {
+          // prevent value inserted on focus
+          return false;
+        },
+        select: function( event, ui ) {
+          var terms = split( this.value );
+          // remove the current input
+          terms.pop();
+          // add the selected item
+          terms.push( ui.item.value );
+          // add placeholder to get the comma-and-space at the end
+          terms.push( "" );
+          this.value = terms.join( ", " );
+          return false;
+        }
   }); 
+
   $("#category").autocomplete({
     source: catearr
   }); 
+
   $("#distribution").autocomplete({
     source: distarr
   }); 
+
   $("#circle").autocomplete({
     source: circlearr
   }); 

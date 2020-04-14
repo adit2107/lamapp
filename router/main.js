@@ -23,6 +23,7 @@ module.exports = function(app)
     });
 // TODO: Insert function
     app.get('/insert', (req, res) => {
+        // retreive arrays
         conn.connection.query('SELECT * FROM malls.malls', (error, results, fields) => {
             if (error) throw error;
             let mallnames = [];
@@ -42,8 +43,14 @@ module.exports = function(app)
             }
             
             res.render('pages/insert.ejs', {results: results, mallnames: [ ...new Set(mallnames)], stores: [ ...new Set(stores)], floor: floor, category: [ ...new Set(category)], dist: [ ...new Set(dist)], circle: [ ...new Set(circle)]})
+        });         
+    });
+
+    app.post('/insert', (req, res) => {
+        console.log(req.body);
+        // inserting
+        conn.connection.query('', (error, results, fields) => {
 
         });
-                
     });
 }
