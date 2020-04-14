@@ -2,6 +2,7 @@ const express = require('express');
 const app = express();
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
+const flash = require('express-flash');
 
 require('./router/main')(app);
 
@@ -14,6 +15,8 @@ app.use(bodyParser.json() );
 app.use(bodyParser.urlencoded({     
   extended: true
 }));
+
+app.use(flash());
 
 const connection = mysql.createConnection({
     host     : 'malldb.czmssa40fhu4.us-east-1.rds.amazonaws.com',

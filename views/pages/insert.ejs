@@ -3,16 +3,26 @@
 <head>
     <title>Mall App</title>
     <%- include('../partials/head') %>
-    <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css">
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js"></script>
+  <link href = "https://code.jquery.com/ui/1.10.4/themes/ui-lightness/jquery-ui.css"
          rel = "stylesheet">
          <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js" integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU=" crossorigin="anonymous"></script>    
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-typeahead/2.11.0/jquery.typeahead.min.js"></script>
 </head>
 
 <body class="container-fluid">
     <header>
         <%- include('../partials/header') %>
     </header>
+    <% if (messages.success) { %>
+    <div class="alert alert-primary alert-dismissible" role="alert">
+        <%= messages.success %>
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+          </button></div>
+    <% } %>
     <form class="md-form" method="POST" action="/insert">
         <div class="form-row">
           <div class="form-group col-sm-2">
@@ -128,7 +138,6 @@
     source: circlearr
   }); 
 });
-
 </script>
 
 </html>
