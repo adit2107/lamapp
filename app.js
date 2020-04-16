@@ -1,8 +1,11 @@
+require('dotenv').config()
+
 const express = require('express');
 const app = express();
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
+require('dotenv').config()
 
 require('./router/main')(app);
 
@@ -10,6 +13,8 @@ require('./router/main')(app);
 app.set('views',__dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
+app.use(express.static(__dirname + '/node_modules/tabulator-tables'));
+
 
 app.use(bodyParser.json() );     
 app.use(bodyParser.urlencoded({     
@@ -19,10 +24,10 @@ app.use(bodyParser.urlencoded({
 app.use(flash());
 
 const connection = mysql.createConnection({
-    host     : 'malldb.czmssa40fhu4.us-east-1.rds.amazonaws.com',
-    user     : 'adit2107',
-    password : 'adit2107?!',
-    database : 'malls',
+    host     : process.env.DB_HOST,
+    user     : process.env.DB_USER,
+    password : process.env.DB_PASS,
+    database : process.env.DB_NAME,
     connectTimeout: 5000
   });
 
@@ -36,8 +41,8 @@ const connection = mysql.createConnection({
 });
   
 
-const server = app.listen(3030, () => {
-    console.log("Server running on 3030!");
+const server = app.listen(process.env.PORT, () => {
+    console.log(`Server running on: ${process.env.PORT}`);
 })
 
 exports.connection = connection;

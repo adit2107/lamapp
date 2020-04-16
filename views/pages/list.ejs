@@ -3,12 +3,9 @@
 <head>
     <title>Mall App</title>
     <%- include('../partials/head') %>
-    <script type="text/javascript" src="/js/table.js"></script>
-    <script type="text/javascript" src="/js/edittable.js"></script>
+    
+    <!-- <script type="text/javascript" src="/js/table.js"></script> -->
 
-    <script>
-            console.log(typeof(results));
-        </script>
 </head>
 
 <body class="container-fluid">
@@ -16,8 +13,10 @@
         <%- include('../partials/header') %>
     </header>
 
-    <table id="table" class="table table-bordered table-sm">
-        <thead>
+    <span id="results" style="display: none;"><%= results %></span>
+
+    <table id="table"class="table table-bordered table-sm">
+        <!-- <thead>
             <tr>
                 <th scope="col">
                     #
@@ -63,8 +62,9 @@
                 <td><%= results[i].address %></td>
             </tr>
             <% } %>
-        </tbody>
+        </tbody> -->
     </table>
 </body>
+<script type="text/javascript" src="/js/ttable.js"></script>
 
 </html>

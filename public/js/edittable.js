@@ -2,7 +2,7 @@ var editor; // use a global for the submit and return data rendering in the exam
  
 $(document).ready(function() {
     editor = new $.fn.dataTable.Editor( {
-        ajax: "/insert",
+        ajax: "/list",
         table: "#table",
         fields: [ {
                 label: "Mall Name:",
@@ -18,7 +18,7 @@ $(document).ready(function() {
                 name: "category"
             }, {
                 label: "Distribution:",
-                name: "dist"
+                name: "distribution"
             }, {
                 label: "Area in Sq.Ft:",
                 name: "area",
@@ -40,7 +40,7 @@ $(document).ready(function() {
  
     $('#table').DataTable( {
         dom: "Bfrtip",
-        ajax: "../php/staff.php",
+        ajax: "/list",
         order: [[ 1, 'asc' ]],
         columns: [
             {
@@ -49,19 +49,20 @@ $(document).ready(function() {
                 className: 'select-checkbox',
                 orderable: false
             },
-            { data: "first_name" },
-            { data: "last_name" },
-            { data: "position" },
-            { data: "office" },
-            { data: "start_date" },
-            { data: "salary", render: $.fn.dataTable.render.number( ',', '.', 0, '$' ) }
+            { data: "mallname" },
+            { data: "stores" },
+            { data: "floor" },
+            { data: "category" },
+            { data: "distribution" },
+            { data: "area", render: $.fn.dataTable.render.number() },
+            { data: "circle" },
+            { data: "address" }
         ],
         select: {
             style:    'os',
             selector: 'td:first-child'
         },
         buttons: [
-            { extend: "create", editor: editor },
             { extend: "edit",   editor: editor },
             { extend: "remove", editor: editor }
         ]

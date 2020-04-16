@@ -29,7 +29,7 @@ module.exports = function(app)
     app.get('/list', (req, res) => {
         conn.connection.query('SELECT * FROM malls.malls', (error, results, fields) => {
             if (error) throw error;
-            res.render('pages/list.ejs', {results: results})
+            res.render('pages/list.ejs', {results: JSON.stringify(results)});  
         });
     });
 

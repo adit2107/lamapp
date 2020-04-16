@@ -1,0 +1,24 @@
+[
+    {
+      "serial": 1,
+      "mallname": "Phoenix Palladium Mall",
+      "stores": "Ishaara",
+      "floor": "Third, Fourth",
+      "category": "Café & Restaurants",
+      "distribution": "Local",
+      "area": 0.431237,
+      "circle": "Tamil Nadu",
+      "address": "Phoenix Market City, 28 Velachery Road, Nagendra Nagar, Anna Garden, Indira Gandhi Nagar,Tamil Nadu 600042"
+    },
+    {
+      "serial": 2,
+      "mallname": "Phoenix Palladium Mall",
+      "stores": "Mother Care",
+      "floor": "Third, Fourth",
+      "category": "Kids Store",
+      "distribution": "Global",
+      "area": 0.431237,
+      "circle": "Tamil Nadu",
+      "address": "Phoenix Market City, 28 Velachery Road, Nagendra Nagar, Anna Garden, Indira Gandhi Nagar,Tamil Nadu 600042"
+    }
+  ]
