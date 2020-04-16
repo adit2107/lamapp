@@ -19,7 +19,7 @@ module.exports = function(app)
         extended: true
     }));
      app.get('/',function(req,res){
-        res.render('pages/index.ejs',{connection: "Connected"})
+        res.render('pages/index.ejs',{connection: "Successfully authenticated."})
      });
 
      app.get('/login',function(req,res){
@@ -32,6 +32,7 @@ module.exports = function(app)
             res.render('pages/list.ejs', {results: JSON.stringify(results)});  
         });
     });
+
 
     app.get('/insert', (req, res) => {
         // retreive arrays
