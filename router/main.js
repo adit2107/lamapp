@@ -40,8 +40,16 @@ module.exports = function(app)
             console.log(results);
             res.send("Updated cell")
         });
-    })
+    });
 
+    app.delete('/list', (req,res) => {
+        var data = [req.body];
+        conn.connection.query('DELETE FROM malls.malls WHERE serial IN (' + data +')', (error, results, fields) => {
+            if (error) throw error;
+            console.log(results);
+            res.send("Deleted rows");
+        });
+    });
 
     app.get('/insert', (req, res) => {
         // retreive arrays

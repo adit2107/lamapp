@@ -3,9 +3,6 @@
 <head>
     <title>Mall App</title>
     <%- include('../partials/head') %>
-    
-    <!-- <script type="text/javascript" src="/js/table.js"></script> -->
-
 </head>
 
 <body class="container-fluid">
@@ -15,54 +12,12 @@
 
     <span id="results" style="display: none;"><%= results %></span>
 
-    <table id="table"class="table table-bordered table-sm">
-        <!-- <thead>
-            <tr>
-                <th scope="col">
-                    #
-                </th>
-                <th scope="col">
-                    Mall Name
-                </th>
-                <th scope="col">
-                    Store List
-                </th>
-                <th scope="col">
-                    Floor
-                </th>
-                <th scope="col">
-                    Category
-                </th>
-                <th scope="col">
-                    Distribution
-                </th>
-                <th scope="col">
-                    Area in Sq.Ft
-                </th>
-                <th scope="col">
-                    Circle
-                </th>
-                <th scope="col">
-                    Address
-                </th>
-            </tr>
+    <div style="padding-top: 10px; padding-bottom: 10px;">
+        <button id="insertrowbtn" type="button" class="btn btn-outline-dark">Insert Row</button>
+        <button id="deleterowbtn" type="button" class="btn btn-outline-dark">Delete Row(s)</button>
+    </div>
 
-        </thead>
-        <tbody>
-            <% for(var i=0; i < results.length; i++) { %>
-            <tr>
-                <td><%= results[i].serial %></td>
-                <td><%= results[i].mallname %></td>
-                <td><%= results[i].stores %></td>
-                <td><%= results[i].floor %></td>
-                <td><%= results[i].category %></td>
-                <td><%= results[i].distribution %></td>
-                <td><%= results[i].area %></td>
-                <td><%= results[i].circle %></td>
-                <td><%= results[i].address %></td>
-            </tr>
-            <% } %>
-        </tbody> -->
+    <table id="table"class="table table-bordered table-sm">
     </table>
 </body>
 <script type="text/javascript" src="/js/ttable.js"></script>
