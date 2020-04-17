@@ -33,6 +33,15 @@ module.exports = function(app)
         });
     });
 
+    app.put('/list', (req, res) => {
+        console.log(req.body);
+        conn.connection.query('UPDATE malls.malls SET ' + conn.connection.escapeId(req.body.columnName) + ' = ' +conn.connection.escape(req.body.newValue) +' WHERE ' + conn.connection.escapeId(req.body.columnName) +' = ' + conn.connection.escape(req.body.oldValue) +' AND serial = ' + conn.connection.escape(req.body.cellId) + '', (error, results, fields) => {
+            if (error) throw error;
+            console.log(results);
+            res.send("Updated cell")
+        });
+    })
+
 
     app.get('/insert', (req, res) => {
         // retreive arrays
