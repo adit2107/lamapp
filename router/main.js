@@ -18,18 +18,18 @@ module.exports = function(app)
     app.use(bodyParser.urlencoded({     
         extended: true
     }));
-     app.get('/',function(req,res){
+
+    app.get('/',function(req,res){
         res.render('pages/index.ejs',{connection: "Successfully authenticated."})
      });
 
-     app.get('/login',function(req,res){
+    app.get('/login',function(req,res){
         res.render('about.ejs');
     });
 
     app.get('/list', (req, res) => {
         conn.connection.query('SELECT * FROM malls.malls', (error, results, fields) => {
             if (error) throw error;
-            console.log("Table refresh was updated");
             res.render('pages/list.ejs', {results: JSON.stringify(results)});  
         });
     });
@@ -57,8 +57,8 @@ module.exports = function(app)
     app.post('/list', (req,res) => {
         conn.connection.query('INSERT INTO malls.malls () VALUES ()', (error, results, fields) => {
             if (error) throw error;
-            console.log(results);
-            res.send("Added empty row");
+            
+            res.json(results);
         } )
     });
 
@@ -87,7 +87,6 @@ module.exports = function(app)
     });
 
     app.post('/insert', (req, res) => {
-        
         // inserting
         console.log(req.body);
         conn.connection.query('INSERT INTO malls.malls (mallname, stores, floor, category, distribution, area, circle, address) VALUES ("'+req.body.mallname+'","'+req.body.stores+'","'+req.body.floor+'","'+req.body.category+'","'+req.body.distribution+'","'+req.body.area+'","'+req.body.circle+'","'+req.body.address+'")', (error, results, fields) => {
