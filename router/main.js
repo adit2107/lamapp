@@ -1,5 +1,4 @@
 const conn  = require('../app');
-const auto  = require('../public/js/autocomplete');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const session = require('express-session');
@@ -57,7 +56,7 @@ module.exports = function(app)
     app.post('/list', (req,res) => {
         conn.connection.query('INSERT INTO malls.malls () VALUES ()', (error, results, fields) => {
             if (error) throw error;
-            
+
             res.json(results);
         } )
     });

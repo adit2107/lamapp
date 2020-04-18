@@ -9,7 +9,7 @@ var table = new Tabulator("#table", {
 	tooltips:false,            //show tool tips on cells
 	addRowPos:"top",          //when adding a new row, add it to the top of the table
 	pagination:"local",       //paginate the data
-	paginationSize:10,         //allow 10 rows per page of data    
+	paginationSize:20,         //allow 10 rows per page of data    
 	resizableRows:true,       //allow row order to be changed
 	movableRows: true,
 	initialSort:[             //set the initial sort order of the data
@@ -44,17 +44,21 @@ var table = new Tabulator("#table", {
 			console.log("Row selection status: " + rowindices);
 
 		},
+		validationFailed: function(cell,value, validators){
+		$('.toast').toast({delay: 2000});
+		$('#validfailtoast').toast('show');
+		console.log(cell);
+		},
 	columns:[                 //define the table columns
-		{rowHandle:true, formatter:"handle", headerSort:false, frozen:true, width:30, minWidth:30},
 		{formatter:"rowSelection", align:"center", headerSort:false, width:50},
     {title:"#", field:"serial", width:50, headerFilter:"input"},
 		{title:"Mall Name", field:"mallname", headerFilter:"input", editor:"input"},
 		{title:"Store", field:"stores", headerFilter:"input", editor:true},
 		{title:"Floor", field:"floor", editor:"select", headerFilter:"input", editorParams:{values:["First", "Second"]}},
 		{title:"Category", field:"category",headerFilter:"input", editor:true},
-		{title:"Distribution", field:"distribution", headerFilter:"input", editor:true},
-		{title:"Area", field:"area", headerFilter:"input", editor:true},
-		{title:"Circle", field:"circle", headerFilter:"input", editor:true},
+		{title:"Distribution", width:130, field:"distribution", headerFilter:"input", editor:true},
+		{title:"Area", width:150, validator:"float", field:"area", headerFilter:"input", editor:true},
+		{title:"Circle", width:150, field:"circle", headerFilter:"input", editor:true},
 		{title:"Address", field:"address",headerFilter:"input", variableHeight:true, editor:"textarea"}
 	],
 });
@@ -117,8 +121,7 @@ $(document).ready(function(){
 	document.getElementById("deleterowbtn").addEventListener("click", function(){
 		if(Array.isArray(rowindices) && rowindices.length){
 		deleteRow(rowindices);
-		// table.deleteRow(rowindices);
-		// table.redraw(true);
+		
 		$('.toast').toast({delay: 2000});
 		$('#successdeletetoast').toast('show');
 		
@@ -131,7 +134,6 @@ $(document).ready(function(){
 });
 
 document.getElementById("insertrowbtn").addEventListener("click", function(){
-	// table.addRow({}, true);
 	addEmptyRow();
 	$('.toast').toast({delay: 3000});
 	$('#successinserttoast').toast('show');

@@ -23,14 +23,11 @@ form {
     padding-top: 5px;
 }
 
-/* .mid-center { 
-    top: 50%; 
-    transform: translateX(-50%) translateY(-50%); 
-}  */
-
-
 .mid-right { 
-    /* top: 10%;  */
     right: 0; 
     transform: translateY(-50%); 
 } 
+
+.navbar {
+    border-radius: 5px;
+}
