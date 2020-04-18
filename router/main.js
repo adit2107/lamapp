@@ -29,17 +29,20 @@ module.exports = function(app)
     app.get('/list', (req, res) => {
         conn.connection.query('SELECT * FROM malls.malls', (error, results, fields) => {
             if (error) throw error;
+            console.log("Table refresh was updated");
             res.render('pages/list.ejs', {results: JSON.stringify(results)});  
         });
     });
 
     app.put('/list', (req, res) => {
         console.log(req.body);
-        conn.connection.query('UPDATE malls.malls SET ' + conn.connection.escapeId(req.body.columnName) + ' = ' +conn.connection.escape(req.body.newValue) +' WHERE ' + conn.connection.escapeId(req.body.columnName) +' = ' + conn.connection.escape(req.body.oldValue) +' AND serial = ' + conn.connection.escape(req.body.cellId) + '', (error, results, fields) => {
+        var fullq = conn.connection.query('UPDATE malls.malls SET ' + conn.connection.escapeId(req.body.columnName) + ' = ' +conn.connection.escape(req.body.newValue) +' WHERE ' + conn.connection.escapeId(req.body.columnName) +' = ' + conn.connection.escape(req.body.oldValue) +' AND serial = ' + conn.connection.escape(req.body.cellId) + '', (error, results, fields) => {
             if (error) throw error;
-            console.log(results);
+            console.log("Affected rows " + results.affectedRows);
             res.send("Updated cell")
         });
+        console.log("Actual query " + fullq.sql);
+
     });
 
     app.delete('/list', (req,res) => {
@@ -49,6 +52,14 @@ module.exports = function(app)
             console.log(results);
             res.send("Deleted rows");
         });
+    });
+
+    app.post('/list', (req,res) => {
+        conn.connection.query('INSERT INTO malls.malls () VALUES ()', (error, results, fields) => {
+            if (error) throw error;
+            console.log(results);
+            res.send("Added empty row");
+        } )
     });
 
     app.get('/insert', (req, res) => {

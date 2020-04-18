@@ -1,4 +1,5 @@
 const result = document.getElementById("results").innerHTML;
+
 var rowindices = [];
 
 var table = new Tabulator("#table", {
@@ -16,7 +17,8 @@ var table = new Tabulator("#table", {
 	],
 	index: "serial",
 	cellEdited: function(cell){
-		
+		console.log("edited cell");
+
 		const updatedcelldata = {
 			oldValue: cell.getOldValue(),
 			newValue: cell.getValue(),
@@ -57,15 +59,23 @@ var table = new Tabulator("#table", {
 	],
 });
 
+console.log("Refreshed table in ttable " + result);
 table.setData(result);
 
 table.redraw(true);
 
+//********************************************
+
+
+
+//********************************************* */
+
 // Update cells
 function updateData(celldata){
+	
 	fetch('/list', {
-		method: 'PUT', // or 'PUT'
-		body: JSON.stringify(celldata), // data can be `string` or {object}!
+		method: 'PUT', 
+		body: JSON.stringify(celldata), 
 		headers:{
 	  	'Content-Type': 'application/json'
 		}
@@ -77,10 +87,21 @@ function updateData(celldata){
 // Delete cells
 function deleteRow(rowindices){
 	fetch('/list', {
-		method: 'DELETE', // or 'PUT'
-		body: JSON.stringify(rowindices), // data can be `string` or {object}!
+		method: 'DELETE', 
+		body: JSON.stringify(rowindices), 
 		headers:{
 	  	'Content-Type': 'application/json'
+		}
+  }).then(res => res.text())
+  .then(response => console.log('Success:', JSON.stringify(response)))
+  .catch(error => console.error('Error:', error));
+}
+// Add empty row
+function addEmptyRow(){
+	fetch('/list', {
+		method: 'POST', 
+		body: '', 
+		headers:{
 		}
   }).then(res => res.text())
   .then(response => console.log('Success:', JSON.stringify(response)))
@@ -90,4 +111,9 @@ function deleteRow(rowindices){
 document.getElementById("deleterowbtn").addEventListener("click", function(){
 	deleteRow(rowindices);
 	table.deleteRow(rowindices);
+});
+
+document.getElementById("insertrowbtn").addEventListener("click", function(){
+	table.addRow({}, true);
+	addEmptyRow();
 });

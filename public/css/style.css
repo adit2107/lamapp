@@ -9,3 +9,8 @@ thead input {
 form {
     margin-top: 25px;
 }
+
+.jumbotron {
+    margin-top: 50px;
+    background-color: transparent;
+}
