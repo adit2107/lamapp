@@ -2,8 +2,7 @@
 <head>
     <title>Mall App</title>
     <%- include('../partials/head') %>
-    <script src="/js/login.js"></script>
-
+    
 </head>
 <body class="container-fluid">
 <header>
@@ -18,13 +17,22 @@
                             <h1 class="display-4 ">Welcome</h1>
                             <hr class="my-4">
                             <p id="" class="lead"></p>
-                            <a id="loginbtn" class="btn btn-primary btn-lg text-center" href="" role="button">Login</a>
+                            <button id="loginbtn" class="btn btn-primary btn-lg text-center">Sign In</button>
                     </div>
                 </div>
             </div>
         </div>
 </main>
 </body>
+<script type="text/javascript">
+
+    document.getElementById("loginbtn").addEventListener("click" , () => {
+        window.location.href("www.google.com");
+        // window.location("https://mallapp21.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=7j5upal5ol8dh05qbpn2n1hbk8&redirect_uri=http://localhost:3030/&state=STATE&scope=openid+profile+aws.cognito.signin.user.admin");
+    
+    });
+    
+</script>
 
 
 </html>
