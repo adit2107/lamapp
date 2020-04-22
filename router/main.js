@@ -2,31 +2,49 @@ const conn  = require('../app');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const session = require('express-session');
+const cookieParser = require('cookie-parser')
+
+authcontroller = require('../public/js/CognitoAuthController');
 
 module.exports = function(app)
 {
-    app.use(bodyParser.json() );    
+   
+    app.use(bodyParser.json() );   
+
     app.use(session({
-        cookie: { maxAge: 60000 },
         saveUninitialized: true,
         resave: 'true',
         secret: 'secret'
     })); 
+
     app.use(flash());
 
     app.use(bodyParser.urlencoded({     
         extended: true
     }));
 
-    app.get('/',function(req,res){
-        res.render('pages/index.ejs',{connection: "Successfully authenticated."})
-     });
+    app.use(cookieParser())
 
-    app.get('/login',function(req,res){
-        res.render('about.ejs');
+    app.get('/', authcontroller.login);
+
+    app.use((req, res, next) => {
+        req.user = req.cookies.user;
+        next();
     });
 
-    app.get('/list', (req, res) => {
+    app.get('/loginerror' ,(req, res) => {
+        res.redirect(`https://${process.env.cog_client_name}.auth.us-east-1.amazoncognito.com/login?client_id=${process.cog_client_id}&response_type=code&redirect_uri=${process.env.redirecturi}`)
+    });
+
+    app.get('/loginsuccess', authcontroller.validate, function(req,res){
+        res.render('pages/success.ejs',{connection: req.user})
+     });
+
+     app.get('/login', (req,res) => {
+         res.render('pages/login.ejs');
+     });
+
+    app.get('/list', authcontroller.validate, (req, res) => {
         conn.connection.query('SELECT * FROM malls.malls', (error, results, fields) => {
             if (error) throw error;
             res.render('pages/list.ejs', {results: JSON.stringify(results)});  
@@ -37,10 +55,8 @@ module.exports = function(app)
         console.log(req.body);
         var fullq = conn.connection.query('UPDATE malls.malls SET ' + conn.connection.escapeId(req.body.columnName) + ' = ' +conn.connection.escape(req.body.newValue) +' WHERE ' + conn.connection.escapeId(req.body.columnName) +' = ' + conn.connection.escape(req.body.oldValue) +' AND serial = ' + conn.connection.escape(req.body.cellId) + '', (error, results, fields) => {
             if (error) throw error;
-            console.log("Affected rows " + results.affectedRows);
             res.send("Updated cell")
         });
-        console.log("Actual query " + fullq.sql);
 
     });
 
@@ -56,44 +72,7 @@ module.exports = function(app)
     app.post('/list', (req,res) => {
         conn.connection.query('INSERT INTO malls.malls () VALUES ()', (error, results, fields) => {
             if (error) throw error;
-
             res.json(results);
         } )
-    });
-
-    app.get('/insert', (req, res) => {
-        // retreive arrays
-        conn.connection.query('SELECT * FROM malls.malls', (error, results, fields) => {
-            if (error) throw error;
-            let mallnames = [];
-            let stores = [];
-            let floor = [];
-            let category = [];
-            let dist = [];
-            let circle = [];
-
-            for (var i=0;i<results.length;i++){
-                mallnames.push(results[i].mallname)
-                stores.push(results[i].stores)
-                floor.push(results[i].floor)
-                category.push(results[i].category)
-                dist.push(results[i].distribution)
-                circle.push(results[i].circle)
-            }
-            
-            res.render('pages/insert.ejs', {results: results, mallnames: [ ...new Set(mallnames)], stores: [ ...new Set(stores)], floor: floor, category: [ ...new Set(category)], dist: [ ...new Set(dist)], circle: [ ...new Set(circle)]})
-        });         
-    });
-
-    app.post('/insert', (req, res) => {
-        // inserting
-        console.log(req.body);
-        conn.connection.query('INSERT INTO malls.malls (mallname, stores, floor, category, distribution, area, circle, address) VALUES ("'+req.body.mallname+'","'+req.body.stores+'","'+req.body.floor+'","'+req.body.category+'","'+req.body.distribution+'","'+req.body.area+'","'+req.body.circle+'","'+req.body.address+'")', (error, results, fields) => {
-            if (error) throw error;
-            console.log("Inserted record: " +results.insertId);
-            req.flash("success", "Record inserted.");
-            res.render("pages/insert.ejs", {mallnames: null, stores: null, floor: null, category: null, dist: null, circle: null});
-        });
-        
     });
 }

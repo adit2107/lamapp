@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<head>
+    <title>Mall App</title>
+    <%- include('../partials/head') %>
+</head>
+<body class="container-fluid">
+<header>
+        <%- include('../partials/header') %>
+</header>
+
+<main>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 offset-3 float-md-center">    
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container text-center">
+                            <h1 class="display-4 ">Welcome, <%= connection %> </h1>
+                            <hr class="my-4">
+                            <p id="authenticated" class="lead"> Successfully authenticated. </p>
+                            <a id="modifyproceed" class="btn btn-primary btn-lg text-center" href="/list" role="button">Modify table</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+</body>
+
+
+</html>

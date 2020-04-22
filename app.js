@@ -5,6 +5,9 @@ const app = express();
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
+CognitoExpress = require("cognito-express")
+authenticatedRoute = express.Router()
+
 require('dotenv').config()
 
 require('./router/main')(app);
