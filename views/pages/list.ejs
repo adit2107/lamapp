@@ -10,7 +10,7 @@
         <%- include('../partials/header') %>
     </header>
 
-    <span id="results" style="display: none;"><%= results %></span>
+    <span id="results" style="display: none;"><%= data.results %></span>
 
     <div class="container-fluid position-relative" style="height: 50px;">
       
@@ -19,7 +19,7 @@
         <button id="deleterowbtn" type="button" class="btn btn-outline-primary">Delete Row(s)</button>
       </div>
       
-      <div id="successtoast" class="toast position-absolute mid-right" data-autohide="true">
+      <div id="successtoast" class="toast hide position-absolute mid-right" data-autohide="true">
         <div class="toast-header">
           <strong class="mr-auto text-warning">Information</strong>
           <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
@@ -31,7 +31,7 @@
         </div>
       </div>
 
-        <div id="errdeletetoast" class="toast position-absolute mid-right" data-autohide="true">
+        <div id="errdeletetoast" class="toast hide position-absolute mid-right" data-autohide="true">
           <div class="toast-header">
             <strong class="mr-auto text-warning">Information</strong>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
@@ -43,7 +43,7 @@
           </div>
         </div>
 
-        <div id="validfailtoast" class="toast position-absolute mid-right" data-autohide="true">
+        <div id="validfailtoast" class="toast hide position-absolute mid-right" data-autohide="true">
           <div class="toast-header">
             <strong class="mr-auto text-danger">Information</strong>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
@@ -54,7 +54,7 @@
             This field does not accept characters.
           </div>
         </div>
-        <div id="successdeletetoast" class="toast position-absolute mid-right" data-autohide="true">
+        <div id="successdeletetoast" class="toast hide position-absolute mid-right" data-autohide="true">
           <div class="toast-header">
             <strong class="mr-auto text-success">Information</strong>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
@@ -65,7 +65,7 @@
             Deleted rows.
           </div>
         </div>
-        <div id="successinserttoast" class="toast position-absolute mid-right" data-autohide="true">
+        <div id="successinserttoast" class="toast hide position-absolute mid-right" data-autohide="true">
           <div class="toast-header">
             <strong class="mr-auto text-success">Information</strong>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">

@@ -23,7 +23,6 @@ exports.validate = (req, res, next) => {
         if(result){
             next();
         } else {
-            console.log(err);
             res.redirect('/loginerror');
         }
         
