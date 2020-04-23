@@ -1,4 +1,6 @@
 const result = document.getElementById("results").innerHTML;
+spandata = document.getElementById("results");
+spandata.remove();
 
 var rowindices = [];
 

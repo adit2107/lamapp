@@ -7,7 +7,6 @@ var proceed = false;
 
 exports.Validate = function(req, callback){
 var token = req.cookies.accesstoken;
-// var poolId = 'us-east-1_CCqtWCVd9';
 
 fetch(`https://cognito-idp.${process.env.cog_region}.amazonaws.com/${process.env.cog_pool_id}/.well-known/jwks.json`, {
     method: 'GET'  

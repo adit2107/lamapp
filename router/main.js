@@ -3,6 +3,7 @@ const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser')
+const fetch = require('node-fetch');
 
 authcontroller = require('../public/js/CognitoAuthController');
 
@@ -42,7 +43,7 @@ module.exports = function(app)
     });
 
     app.get('/loginerror' ,(req, res) => {
-        res.redirect(`https://mallapp21.auth.us-east-1.amazoncognito.com/login?client_id=7j5upal5ol8dh05qbpn2n1hbk8&response_type=code&redirect_uri=http://localhost:3030/`)
+        res.redirect(`https://${process.env.cog_client_name}.auth.${process.env.cog_region}.amazoncognito.com/login?client_id=${process.env.cog_client_id}&response_type=code&redirect_uri=${process.env.redirecturi}`)
     });
 
     app.get('/loginsuccess', authcontroller.validate, function(req,res){
@@ -51,8 +52,25 @@ module.exports = function(app)
 
      app.get('/logout', (req,res) => {
         res.clearCookie('user', { path: '/' });
-        res.clearCookie('accesstoken');
+        res.clearCookie('accesstoken', {path: '/'});
         res.render('pages/logout.ejs', {data:{logout: true}});
+    });
+
+    app.post('/logout', (req,res) => {
+        res.clearCookie('user', { path: '/' });
+        res.clearCookie('accesstoken', {path: '/'});
+        // fetch('https://mallapp21.auth.us-east-1.amazoncognito.com/logout?client_id=7j5upal5ol8dh05qbpn2n1hbk8&logout_uri=http://localhost:3030/logout', {
+        //     method: 'GET'
+        // }).then(res => res.text())
+        // .then(data => {
+            
+        //     console.info(data);
+        // })
+        // .catch(err => {
+        //     console.error(err);
+        // });
+
+
     });
 
     app.get('/list', authcontroller.validate, (req, res) => {
