@@ -17,6 +17,7 @@ app.set('views',__dirname + '/views');
 app.set('view engine', 'ejs');
 app.use(express.static(__dirname + '/public'));
 app.use(express.static(__dirname + '/node_modules/tabulator-tables'));
+app.use(express.static(__dirname + '/node_modules/bootstrap-select'));
 
 
 app.use(bodyParser.json() );     

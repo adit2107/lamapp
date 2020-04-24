@@ -7,7 +7,6 @@
     "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "type": "module",
   "author": "Adit Ratnam",
   "license": "ISC",
   "dependencies": {
@@ -15,6 +14,7 @@
     "amazon-cognito-identity-js": "^4.2.1",
     "body-parser": "^1.19.0",
     "bootstrap": "^4.4.1",
+    "bootstrap-select": "^1.13.15",
     "cognito-express": "^2.0.16",
     "cookie-parser": "^1.4.5",
     "dotenv": "^8.2.0",

@@ -1,22 +1,20 @@
-import { filterform } from "./filtermodal";
-
 const result = document.getElementById("results").innerHTML;
 
 spandata = document.getElementById("results");
 spandata.remove();
 
 var editparams = {
-values: true,
-freetext: true,
-allowEmpty: false,
-verticalNavigation:"hybrid"
+	values: true,
+	freetext: true,
+	allowEmpty: false,
+	verticalNavigation: "hybrid"
 }
 
 var rowindices = [];
 
 var table = new Tabulator("#table", {
 	//load row data from array
-	layout: "fitData", 
+	layout: "fitData",
 	// responsiveLayout: "collapse", //hide columns that dont fit on the table
 	tooltips: false, //show tool tips on cells
 	addRowPos: "top", //when adding a new row, add it to the top of the table
@@ -64,41 +62,47 @@ var table = new Tabulator("#table", {
 			formatter: "rowSelection",
 			align: "center",
 			headerSort: false,
-		
+
 		},
 		{
 			title: "#",
 			field: "serial",
-			
-			
+
+
 		},
 		{
 			title: "Mall Name",
 			field: "mallname",
 			editor: "autocomplete",
-			
+
 			editorParams: editparams
 		},
 		{
 			title: "Google Address",
-			columns:[
-				{title: "Town",
-				field: "address_town",
-				editor: "autocomplete",
-				editorParams: editparams
-			},
-			{title: "City",
-			field: "address_city",
-			editor: "autocomplete",
-			editorParams: editparams},
-			{title: "State",
-				field: "address_state",
-				editor: "autocomplete",
-				editorParams: editparams},
-			{title: "Country",
-				field: "address_country",
-				editor: "autocomplete",
-				editorParams: editparams}
+			columns: [{
+					title: "Town",
+					field: "address_town",
+					editor: "autocomplete",
+					editorParams: editparams
+				},
+				{
+					title: "City",
+					field: "address_city",
+					editor: "autocomplete",
+					editorParams: editparams
+				},
+				{
+					title: "State",
+					field: "address_state",
+					editor: "autocomplete",
+					editorParams: editparams
+				},
+				{
+					title: "Country",
+					field: "address_country",
+					editor: "autocomplete",
+					editorParams: editparams
+				}
 			]
 		},
 		{
@@ -128,16 +132,18 @@ var table = new Tabulator("#table", {
 		},
 		{
 			title: "Store",
-			columns:[
-				{title: "Common Name",
-				field: "store_common_name",
-				editor: "autocomplete",
-				editorParams: editparams
-			},
-			{title: "Full Name",
-			field: "store_full_name",
-			editor: "autocomplete",
-			editorParams: editparams}
+			columns: [{
+					title: "Common Name",
+					field: "store_common_name",
+					editor: "autocomplete",
+					editorParams: editparams
+				},
+				{
+					title: "Full Name",
+					field: "store_full_name",
+					editor: "autocomplete",
+					editorParams: editparams
+				}
 			]
 		},
 		{
@@ -148,31 +154,35 @@ var table = new Tabulator("#table", {
 		},
 		{
 			title: "Category",
-			columns:[
-				{title: "1",
-				field: "category_1",
-				editor: "autocomplete",
-				editorParams: editparams
-			},
-			{title: "2",
-			field: "category_2",
-			editor: "autocomplete",
-			editorParams: editparams},
-			{title: "3",
-				field: "category_3",
-				editor: "autocomplete",
-				editorParams: editparams},
-			{
-				title: "4",
-				field: "category_4",
-				editor: "autocomplete",
-				editorParams: editparams
-			},{
-				title: "5",
-				field: "category_5",
-				editor: "autocomplete",
-				editorParams: editparams
-			}
+			columns: [{
+					title: "1",
+					field: "category_1",
+					editor: "autocomplete",
+					editorParams: editparams
+				},
+				{
+					title: "2",
+					field: "category_2",
+					editor: "autocomplete",
+					editorParams: editparams
+				},
+				{
+					title: "3",
+					field: "category_3",
+					editor: "autocomplete",
+					editorParams: editparams
+				},
+				{
+					title: "4",
+					field: "category_4",
+					editor: "autocomplete",
+					editorParams: editparams
+				}, {
+					title: "5",
+					field: "category_5",
+					editor: "autocomplete",
+					editorParams: editparams
+				}
 			]
 		},
 		{
@@ -183,26 +193,30 @@ var table = new Tabulator("#table", {
 		},
 		{
 			title: "HQ Address",
-			columns:[
-				{title: "Town",
-				field: "brandhq_address_town",
-				editor: "autocomplete",
-				editorParams: editparams
-			},
-			{title: "City",
-			field: "brandhq_address_city",
-			editor: "autocomplete",
-			editorParams: editparams},
-			{title: "State",
-				field: "brandhq_address_state",
-				editor: "autocomplete",
-				editorParams: editparams},
-			{
-				title: "Country",
-				field: "brandhq_address_country",
-				editor: "autocomplete",
-				editorParams: editparams
-			}
+			columns: [{
+					title: "Town",
+					field: "brandhq_address_town",
+					editor: "autocomplete",
+					editorParams: editparams
+				},
+				{
+					title: "City",
+					field: "brandhq_address_city",
+					editor: "autocomplete",
+					editorParams: editparams
+				},
+				{
+					title: "State",
+					field: "brandhq_address_state",
+					editor: "autocomplete",
+					editorParams: editparams
+				},
+				{
+					title: "Country",
+					field: "brandhq_address_country",
+					editor: "autocomplete",
+					editorParams: editparams
+				}
 			]
 		},
 		{
@@ -222,7 +236,7 @@ var table = new Tabulator("#table", {
 			field: "area",
 			editor: "input",
 			validator: "float"
-			
+
 		},
 	]
 });
@@ -319,23 +333,60 @@ $(document).ready(function () {
 			$('#errdeletetoast').toast('show');
 		}
 	});
-});
-
-document.getElementById("insertrowbtn").addEventListener("click", function () {
-	addEmptyRow();
-	$('.toast').toast({
-		delay: 3000
+	document.getElementById("insertrowbtn").addEventListener("click", function () {
+		addEmptyRow();
+		$('.toast').toast({
+			delay: 3000
+		});
+		$('#successinserttoast').toast('show');
 	});
-	$('#successinserttoast').toast('show');
-});
+	
+	// Download CSV
+	document.getElementById("download-csv").addEventListener("click", function () {
+		table.download("csv", "POIData.csv");
+	});
 
-// Download CSV
-document.getElementById("download-csv").addEventListener("click", function(){
-    table.download("csv", "POIData.csv");
-});
+	// filter modal
+	var filterdata = {
+		'selectcols': [],
+		'wherecols': []
+	}
+	
+	// Filter modal
+	document.getElementById("filterbtn").addEventListener("click", function () {
 
-// Filter modal
-document.getElementById("filterbtn").addEventListener("click", function(){
-    filterform();
+		$('#filterModal').modal({
+			show: true,
+			keyboard: true,
+			focus: true,
+			handleUpdate: true
+		});
+
+		// Select picker options
+	var selectcolopts = [];
+
+	var selectcolsrc = table.getColumns(true);
+
+	selectcolsrc.slice(2, ).forEach((item) => {
+		console.log(selectcolsrc.indexOf(item));
+		console.log(item.getDefinition());
+
+		if(selectcolsrc.indexOf(item) == 3 || 8 || 10 || 12){
+			console.log(item.getDefinition().columns)
+			
+		}
+
+		var option = "<option>" + item.getDefinition().title +"</option>";
+		selectcolopts.push(option);
+	});
+	$('.selectpick').html(selectcolopts);
+	$('.selectpick').selectpicker('refresh');
+	
+	});
+
+	document.getElementById("modal-close").addEventListener("click", function () {
+		$('.selectpick').selectpicker('destroy');
+	});
+	
 });
 

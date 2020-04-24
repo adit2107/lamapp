@@ -89,22 +89,26 @@
     <div class="modal-content">
       <div class="modal-header">
         <h5 class="modal-title" id="exampleModalLabel">Select fields to query</h5>
-        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+        <button type="button" id="modal-close" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
       </div>
       <div class="modal-body">
         Select Column(s):
-
+        <select id="selectcols" class="selectpick" multiple>
+        </select>
+        WHERE:
+        <select id="wherecols" class="selectpick" data-live-search="true" multiple> 
+        </select>
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary">Filter Selection</button>
+        <button type="button" id="filtertablebtn" class="btn btn-primary">Filter Selection</button>
       </div>
     </div>
   </div>
 </div>
     
 </body>
-<script type="module" src="/js/ttable.js"></script>
+<script type="text/javascript" src="/js/ttable.js"></script>
 
 </html>
