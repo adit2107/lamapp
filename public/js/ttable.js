@@ -336,15 +336,6 @@ document.getElementById("download-csv").addEventListener("click", function(){
 
 // Filter modal
 document.getElementById("filterbtn").addEventListener("click", function(){
-    $('#filterModal').modal({
-		show: true,
-		keyboard: true,
-		focus: true,
-		handleUpdate: true
-	});
+    filterform();
 });
 
-<script type="module">
-import { filterform } from 'filtermodal.js';
-filterform();
-</script>

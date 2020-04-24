@@ -7,7 +7,8 @@
     "start": "nodemon app.js",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "author": "",
+  "type": "module",
+  "author": "Adit Ratnam",
   "license": "ISC",
   "dependencies": {
     "@tarekraafat/autocomplete.js": "^7.2.0",
