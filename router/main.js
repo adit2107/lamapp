@@ -7,6 +7,9 @@ const fetch = require('node-fetch');
 
 authcontroller = require('../public/js/CognitoAuthController');
 
+querygenerator = require('../public/js/generateQuery');
+
+
 module.exports = function(app)
 {
    
@@ -64,7 +67,6 @@ module.exports = function(app)
     });
 
     app.put('/list', (req, res) => {
-        console.log(req.user);
         conn.connection.query('UPDATE malls.mallslatest SET ' + conn.connection.escapeId(req.body.columnName) + ' = ' +conn.connection.escape(req.body.newValue) +' WHERE ' + conn.connection.escapeId(req.body.columnName) +' = ' + conn.connection.escape(req.body.oldValue) +' AND serial = ' + conn.connection.escape(req.body.cellId) + '', (error, results, fields) => {
             if (error) throw error;
             res.send("Updated cell")

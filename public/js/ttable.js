@@ -1,3 +1,5 @@
+import { filterform } from "./filtermodal";
+
 const result = document.getElementById("results").innerHTML;
 
 spandata = document.getElementById("results");
@@ -14,8 +16,8 @@ var rowindices = [];
 
 var table = new Tabulator("#table", {
 	//load row data from array
-	layout: "fitColumns", //fit columns to width of table
-	responsiveLayout: "hide", //hide columns that dont fit on the table
+	layout: "fitData", 
+	// responsiveLayout: "collapse", //hide columns that dont fit on the table
 	tooltips: false, //show tool tips on cells
 	addRowPos: "top", //when adding a new row, add it to the top of the table
 	pagination: "local", //paginate the data
@@ -41,8 +43,6 @@ var table = new Tabulator("#table", {
 		updateData(updatedcelldata);
 	},
 	rowSelected: function (row) {
-		//row - row component for the selected row
-		// const selectedRows = table.getSelectedRows();
 		const selRowIndex = row.getIndex();
 		rowindices.push(selRowIndex);
 
@@ -64,18 +64,19 @@ var table = new Tabulator("#table", {
 			formatter: "rowSelection",
 			align: "center",
 			headerSort: false,
-			width: 50
+		
 		},
 		{
 			title: "#",
 			field: "serial",
-			width: 50,
+			
 			
 		},
 		{
 			title: "Mall Name",
 			field: "mallname",
 			editor: "autocomplete",
+			
 			editorParams: editparams
 		},
 		{
@@ -141,7 +142,7 @@ var table = new Tabulator("#table", {
 		},
 		{
 			title: "Brand - Single/Multi",
-			field: "brand_type",
+			field: "brand",
 			editor: "autocomplete",
 			editorParams: editparams
 		},
@@ -332,3 +333,18 @@ document.getElementById("insertrowbtn").addEventListener("click", function () {
 document.getElementById("download-csv").addEventListener("click", function(){
     table.download("csv", "POIData.csv");
 });
+
+// Filter modal
+document.getElementById("filterbtn").addEventListener("click", function(){
+    $('#filterModal').modal({
+		show: true,
+		keyboard: true,
+		focus: true,
+		handleUpdate: true
+	});
+});
+
+<script type="module">
+import { filterform } from 'filtermodal.js';
+filterform();
+</script>

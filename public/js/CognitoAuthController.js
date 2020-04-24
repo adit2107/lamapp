@@ -3,7 +3,6 @@ var CognitoAuthLogin = require('./CognitoAuthLogin');
 var CognitoAuthValidate = require('./CognitoAuthValidate');
 
 
-
 exports.login = (req, res, next) => {
     CognitoAuthLogin.Login(req.query.code, function(err, result){
         if(err) throw err;

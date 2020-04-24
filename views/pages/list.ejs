@@ -17,7 +17,7 @@
       <div class="btngroup position-absolute mid-center">
         <button id="insertrowbtn" type="button" class="btn btn-outline-primary">Insert Row</button>
         <button id="deleterowbtn" type="button" class="btn btn-outline-primary">Delete Row(s)</button>
-        <button id="deleterowbtn" type="button" class="btn btn-outline-primary">Filter Table</button>
+        <button id="filterbtn" type="button" data-toggle="modal" data-target="#filterModal" class="btn btn-outline-primary">Filter Table</button>
         <button id="download-csv" type="button" class="btn btn-outline-primary" >Download CSV</button>
       </div>
       
@@ -82,6 +82,27 @@
 
     <table id="table" class="table table-bordered table-sm">
     </table>
+
+<!-- Filter Modal -->
+<div class="modal fade hide" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModal" aria-hidden="true">
+  <div class="modal-dialog modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Select fields to query</h5>
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body">
+        Select Column(s):
+        
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary">Filter Selection</button>
+      </div>
+    </div>
+  </div>
+</div>
     
 </body>
 <script type="text/javascript" src="/js/ttable.js"></script>

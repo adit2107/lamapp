@@ -31,3 +31,7 @@ form {
 .navbar {
     border-radius: 5px;
 }
+
+#table .tabulator-col-title {
+    text-align: center;
+}
