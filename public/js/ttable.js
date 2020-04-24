@@ -70,70 +70,160 @@ var table = new Tabulator("#table", {
 			title: "#",
 			field: "serial",
 			width: 50,
-			headerFilter: "input"
+			
 		},
 		{
 			title: "Mall Name",
 			field: "mallname",
-			headerFilter: "input",
+			editor: "autocomplete",
+			editorParams: editparams
+		},
+		{
+			title: "Google Address",
+			columns:[
+				{title: "Town",
+				field: "address_town",
+				editor: "autocomplete",
+				editorParams: editparams
+			},
+			{title: "City",
+			field: "address_city",
+			editor: "autocomplete",
+			editorParams: editparams},
+			{title: "State",
+				field: "address_state",
+				editor: "autocomplete",
+				editorParams: editparams},
+			{title: "Country",
+				field: "address_country",
+				editor: "autocomplete",
+				editorParams: editparams}
+			]
+		},
+		{
+			title: "Mall Website",
+			field: "website",
+			editor: "autocomplete",
+			editorParams: editparams
+		},
+		{
+			title: "Cluster (Geography)",
+			field: "cluster",
+			editor: "select",
+			editor: "autocomplete",
+			editorParams: editparams
+		},
+		{
+			title: "Headquarters",
+			field: "hq",
+			editor: "autocomplete",
+			editorParams: editparams
+		},
+		{
+			title: "Country Zone",
+			field: "hq_country",
 			editor: "autocomplete",
 			editorParams: editparams
 		},
 		{
 			title: "Store",
-			field: "stores",
-			headerFilter: "input",
+			columns:[
+				{title: "Common Name",
+				field: "store_common_name",
+				editor: "autocomplete",
+				editorParams: editparams
+			},
+			{title: "Full Name",
+			field: "store_full_name",
+			editor: "autocomplete",
+			editorParams: editparams}
+			]
+		},
+		{
+			title: "Brand - Single/Multi",
+			field: "brand_type",
 			editor: "autocomplete",
 			editorParams: editparams
 		},
 		{
-			title: "Floor",
-			field: "floor",
-			editor: "select",
-			headerFilter: "input",
-			editorParams: {
-				values: ["First", "Second"]
+			title: "Category",
+			columns:[
+				{title: "1",
+				field: "category_1",
+				editor: "autocomplete",
+				editorParams: editparams
+			},
+			{title: "2",
+			field: "category_2",
+			editor: "autocomplete",
+			editorParams: editparams},
+			{title: "3",
+				field: "category_3",
+				editor: "autocomplete",
+				editorParams: editparams},
+			{
+				title: "4",
+				field: "category_4",
+				editor: "autocomplete",
+				editorParams: editparams
+			},{
+				title: "5",
+				field: "category_5",
+				editor: "autocomplete",
+				editorParams: editparams
 			}
+			]
 		},
 		{
-			title: "Category",
-			field: "category",
-			headerFilter: "input",
+			title: "Brand Website",
+			field: "brand_website",
+			editor: "autocomplete",
+			editorParams: editparams
+		},
+		{
+			title: "HQ Address",
+			columns:[
+				{title: "Town",
+				field: "brandhq_address_town",
+				editor: "autocomplete",
+				editorParams: editparams
+			},
+			{title: "City",
+			field: "brandhq_address_city",
+			editor: "autocomplete",
+			editorParams: editparams},
+			{title: "State",
+				field: "brandhq_address_state",
+				editor: "autocomplete",
+				editorParams: editparams},
+			{
+				title: "Country",
+				field: "brandhq_address_country",
+				editor: "autocomplete",
+				editorParams: editparams
+			}
+			]
+		},
+		{
+			title: "Floor",
+			field: "floor",
 			editor: "autocomplete",
 			editorParams: editparams
 		},
 		{
 			title: "Distribution",
-			width: 130,
 			field: "distribution",
-			headerFilter: "input",
 			editor: "autocomplete",
 			editorParams: editparams
 		},
 		{
-			title: "Area",
-			width: 150,
-			validator: "float",
+			title: "Area (SQ.FT in Mil)",
 			field: "area",
-			headerFilter: "input",
-			editor: true
+			editor: "input",
+			validator: "float"
+			
 		},
-		{
-			title: "Circle",
-			width: 150,
-			field: "circle",
-			headerFilter: "input",
-			editor: "autocomplete",
-			editorParams: editparams
-		},
-		{
-			title: "Address",
-			field: "address",
-			headerFilter: "input",
-			variableHeight: true,
-			editor: "textarea"
-		}
-	],
+	]
 });
 
 table.setData(result);
@@ -181,14 +271,30 @@ function addEmptyRow() {
 		.then(response => {
 			table.addRow({
 				serial: response.insertId,
-				mallname: '',
-				stores: '',
+				address_town: '',
+				address_city: '',
+				address_state: '',
+				address_country: '',
+				website: '',
+				cluster: '',
+				hq: '',
+				hq_country: '',
+				store_common_name: '',
+				store_full_name: '',
+				brand: '',
+				category_1: '',
+				category_2: '',
+				category_3: '',
+				category_4: '',
+				category_5: '',
+				brand_website: '',
+				brandhq_address_town: '',
+				brandhq_address_city: '',
+				brandhq_address_state: '',
+				brandhq_address_country: '',
 				floor: '',
-				category: '',
 				distribution: '',
-				area: '',
-				circle: '',
-				address: ''
+				area: ''
 			}, true);
 			table.redraw(true);
 		})

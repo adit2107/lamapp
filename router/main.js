@@ -56,25 +56,8 @@ module.exports = function(app)
         res.render('pages/logout.ejs', {data:{logout: true}});
     });
 
-    app.post('/logout', (req,res) => {
-        res.clearCookie('user', { path: '/' });
-        res.clearCookie('accesstoken', {path: '/'});
-        // fetch('https://mallapp21.auth.us-east-1.amazoncognito.com/logout?client_id=7j5upal5ol8dh05qbpn2n1hbk8&logout_uri=http://localhost:3030/logout', {
-        //     method: 'GET'
-        // }).then(res => res.text())
-        // .then(data => {
-            
-        //     console.info(data);
-        // })
-        // .catch(err => {
-        //     console.error(err);
-        // });
-
-
-    });
-
     app.get('/list', authcontroller.validate, (req, res) => {
-        conn.connection.query('SELECT * FROM malls.malls', (error, results, fields) => {
+        conn.connection.query('SELECT * FROM malls.mallslatest', (error, results, fields) => {
             if (error) throw error;
             res.render('pages/list.ejs', {data: {results: JSON.stringify(results)}});  
         });
@@ -82,7 +65,7 @@ module.exports = function(app)
 
     app.put('/list', (req, res) => {
         console.log(req.user);
-        var fullq = conn.connection.query('UPDATE malls.malls SET ' + conn.connection.escapeId(req.body.columnName) + ' = ' +conn.connection.escape(req.body.newValue) +' WHERE ' + conn.connection.escapeId(req.body.columnName) +' = ' + conn.connection.escape(req.body.oldValue) +' AND serial = ' + conn.connection.escape(req.body.cellId) + '', (error, results, fields) => {
+        conn.connection.query('UPDATE malls.mallslatest SET ' + conn.connection.escapeId(req.body.columnName) + ' = ' +conn.connection.escape(req.body.newValue) +' WHERE ' + conn.connection.escapeId(req.body.columnName) +' = ' + conn.connection.escape(req.body.oldValue) +' AND serial = ' + conn.connection.escape(req.body.cellId) + '', (error, results, fields) => {
             if (error) throw error;
             res.send("Updated cell")
         });
@@ -91,7 +74,7 @@ module.exports = function(app)
 
     app.delete('/list', (req,res) => {
         var data = [req.body];
-        conn.connection.query('DELETE FROM malls.malls WHERE serial IN (' + data +')', (error, results, fields) => {
+        conn.connection.query('DELETE FROM malls.mallslatest WHERE serial IN (' + data +')', (error, results, fields) => {
             if (error) throw error;
             console.log(results);
             res.send("Deleted rows");
@@ -99,7 +82,7 @@ module.exports = function(app)
     });
 
     app.post('/list', (req,res) => {
-        conn.connection.query('INSERT INTO malls.malls () VALUES ()', (error, results, fields) => {
+        conn.connection.query('INSERT INTO malls.mallslatest () VALUES ()', (error, results, fields) => {
             if (error) throw error;
             res.json(results);
         } )
