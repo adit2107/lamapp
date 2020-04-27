@@ -1,6 +1,6 @@
 const cipherresult = document.getElementById("results").innerHTML;
 
-var bytes  = CryptoJS.AES.decrypt(cipherresult, 'poi212');
+var bytes = CryptoJS.AES.decrypt(cipherresult, 'poi212');
 var result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
 var editparams = {
@@ -15,27 +15,21 @@ var rowindices = [];
 var table = new Tabulator("#table", {
 	//load row data from array
 	layout: "fitData",
-	// responsiveLayout: "collapse", //hide columns that dont fit on the table
-	tooltips: false, //show tool tips on cells
-	addRowPos: "top", //when adding a new row, add it to the top of the table
-	pagination: "local", //paginate the data
-	paginationSize: 20, //allow 10 rows per page of data    
-	resizableRows: true, //allow row order to be changed
+	addRowPos: "top",
+	pagination: "local",
+	paginationSize: 10,
+	resizableRows: true,
 	movableRows: true,
-	initialSort: [ //set the initial sort order of the data
-		{
-			column: "name",
-			dir: "asc"
-		},
-	],
+	initialSort: [{
+		column: "name",
+		dir: "asc"
+	}, ],
 	index: "serial",
-	dataLoaded:function(data){
+	dataLoaded: function (data) {
 		var visiblecols = Object.keys(data[0]);
 		visiblecols.forEach(item => {
 			table.showColumn(item);
 		})
-
-
 	},
 	cellEdited: function (cell) {
 
@@ -65,8 +59,7 @@ var table = new Tabulator("#table", {
 		$('#validfailtoast').toast('show');
 
 	},
-	columns: [
-		{
+	columns: [{
 			formatter: "rowSelection",
 			align: "center",
 			headerSort: false
@@ -368,7 +361,7 @@ $(document).ready(function () {
 		});
 		$('#successinserttoast').toast('show');
 	});
-	
+
 	// Download CSV
 	document.getElementById("download-csv").addEventListener("click", function () {
 		table.download("csv", "POIData.csv");
@@ -379,7 +372,7 @@ $(document).ready(function () {
 		'selectcols': [],
 		'wherecols': []
 	}
-	
+
 	// Filter modal
 	document.getElementById("filterbtn").addEventListener("click", function () {
 
@@ -391,30 +384,59 @@ $(document).ready(function () {
 		});
 
 		// Select picker options
-	var selectcolopts = [];
+		var selectcolopts = '';
 
-	var selectcolsrc = table.getColumns(true);
+		var selectcolsrc = table.getColumns(true).slice(2, );
 
-	selectcolsrc.slice(2, ).forEach((item) => {
-		console.log(selectcolsrc.indexOf(item));
-		console.log(item.getDefinition());
+		function getelems(selectcolsrc) {
+			for (let [index, item] of selectcolsrc.entries()) {
 
-		if(selectcolsrc.indexOf(item) == 3 || 8 || 10 || 12){
-			console.log(item.getDefinition().columns)
-			
+				if (index == 1 || index == 6 || index == 8 || index == 10) {
+					selectcolopts += `<optgroup label="${item.getDefinition().title}">`;
+					getopts(item);
+					selectcolopts += "</optgroup>";
+				} else {
+					var option = "<option>" + item.getDefinition().title + "</option>";
+					selectcolopts += option;
+				}
+			}
 		}
 
-		var option = "<option>" + item.getDefinition().title +"</option>";
-		selectcolopts.push(option);
+		function getopts(item) {
+
+			var optgs = item.getDefinition().columns;
+			for (itemtitle of optgs) {
+
+				selectcolopts += "<option>" + itemtitle.title + "</option>";
+
+			}
+
+		}
+
+		getelems(selectcolsrc);
+
+		$('#selectcols1').html(selectcolopts);
+		$('#selectcols1').selectpicker('refresh');
+
+		$('#selectcols2').html(selectcolopts);
+		$('#selectcols2').selectpicker('refresh');
+
 	});
-	$('.selectpick').html(selectcolopts);
-	$('.selectpick').selectpicker('refresh');
-	
+
+	document.getElementById("filtertablebtn").addEventListener("click", function () {
+		fetch('/list', {
+			method: 'POST',
+			body: '',
+			headers: {}
+		}).then(res => res.json())
+		.then(response => {
+			
+		})
+		.catch(error => console.error('Error:', error));
 	});
 
 	document.getElementById("modal-close").addEventListener("click", function () {
 		$('.selectpick').selectpicker('destroy');
 	});
-	
-});
 
+});

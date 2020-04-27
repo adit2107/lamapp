@@ -1,3 +1,5 @@
-exports.generateQuery = (queryparams, callback) => {
+exports.generateQuery = (queryparams) => {
+    console.log(queryparams);
+    
 
 }

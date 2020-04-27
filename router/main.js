@@ -63,11 +63,13 @@ module.exports = function(app)
 
     app.get('/list', authcontroller.validate, (req, res) => {
 
-        conn.connection.query('SELECT serial, mallname, store_common_name  FROM malls.mallslatest WHERE store_common_name IN (\'Adidas\', \'Adidas Kids\')', (error, results, fields) => {
+        conn.connection.query('SELECT * FROM malls.mallslatest', (error, results, fields) => {
             if (error) throw error;
             var cipher = encryptdata.encryptdata(results);
             res.render('pages/list.ejs', {data: {results: cipher}});  
         });
+
+      
     });
 
     app.put('/list', (req, res) => {
@@ -89,9 +91,16 @@ module.exports = function(app)
     });
 
     app.post('/list', (req,res) => {
-        conn.connection.query('INSERT INTO malls.mallslatest () VALUES ()', (error, results, fields) => {
+
+        conn.connection.query('SELECT * FROM malls.mallslatest WHERE store_common_name IN (\'Adidas\', \'Adidas Kids\')', (error, results, fields) => {
             if (error) throw error;
-            res.json(results);
-        } )
+            var cipher = encryptdata.encryptdata(results);
+            res.render('pages/list.ejs', {data: {results: cipher}});  
+        });
+
+        // conn.connection.query('INSERT INTO malls.mallslatest () VALUES ()', (error, results, fields) => {
+        //     if (error) throw error;
+        //     res.json(results);
+        // } );
     });
 }
