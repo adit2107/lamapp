@@ -5,9 +5,11 @@ const session = require('express-session');
 const cookieParser = require('cookie-parser')
 const fetch = require('node-fetch');
 
-authcontroller = require('../public/js/CognitoAuthController');
 
+// Important stuff
+authcontroller = require('../public/js/CognitoAuthController');
 querygenerator = require('../public/js/generateQuery');
+encryptdata = require('../public/js/encryptdata');
 
 
 module.exports = function(app)
@@ -60,9 +62,11 @@ module.exports = function(app)
     });
 
     app.get('/list', authcontroller.validate, (req, res) => {
-        conn.connection.query('SELECT * FROM malls.mallslatest', (error, results, fields) => {
+
+        conn.connection.query('SELECT serial, mallname, store_common_name  FROM malls.mallslatest WHERE store_common_name IN (\'Adidas\', \'Adidas Kids\')', (error, results, fields) => {
             if (error) throw error;
-            res.render('pages/list.ejs', {data: {results: JSON.stringify(results)}});  
+            var cipher = encryptdata.encryptdata(results);
+            res.render('pages/list.ejs', {data: {results: cipher}});  
         });
     });
 

@@ -1,7 +1,7 @@
-const result = document.getElementById("results").innerHTML;
+const cipherresult = document.getElementById("results").innerHTML;
 
-spandata = document.getElementById("results");
-spandata.remove();
+var bytes  = CryptoJS.AES.decrypt(cipherresult, 'poi212');
+var result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
 var editparams = {
 	values: true,
@@ -29,6 +29,14 @@ var table = new Tabulator("#table", {
 		},
 	],
 	index: "serial",
+	dataLoaded:function(data){
+		var visiblecols = Object.keys(data[0]);
+		visiblecols.forEach(item => {
+			table.showColumn(item);
+		})
+
+
+	},
 	cellEdited: function (cell) {
 
 		const updatedcelldata = {
@@ -57,25 +65,22 @@ var table = new Tabulator("#table", {
 		$('#validfailtoast').toast('show');
 
 	},
-	columns: [ //define the table columns
+	columns: [
 		{
 			formatter: "rowSelection",
 			align: "center",
-			headerSort: false,
-
+			headerSort: false
 		},
 		{
 			title: "#",
-			field: "serial",
-
-
+			field: "serial"
 		},
 		{
 			title: "Mall Name",
 			field: "mallname",
 			editor: "autocomplete",
-
-			editorParams: editparams
+			editorParams: editparams,
+			visible: false
 		},
 		{
 			title: "Google Address",
@@ -83,25 +88,29 @@ var table = new Tabulator("#table", {
 					title: "Town",
 					field: "address_town",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				},
 				{
 					title: "City",
 					field: "address_city",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				},
 				{
 					title: "State",
 					field: "address_state",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				},
 				{
 					title: "Country",
 					field: "address_country",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				}
 			]
 		},
@@ -109,26 +118,30 @@ var table = new Tabulator("#table", {
 			title: "Mall Website",
 			field: "website",
 			editor: "autocomplete",
-			editorParams: editparams
+			editorParams: editparams,
+			visible: false
 		},
 		{
 			title: "Cluster (Geography)",
 			field: "cluster",
 			editor: "select",
 			editor: "autocomplete",
-			editorParams: editparams
+			editorParams: editparams,
+			visible: false
 		},
 		{
 			title: "Headquarters",
 			field: "hq",
 			editor: "autocomplete",
-			editorParams: editparams
+			editorParams: editparams,
+			visible: false
 		},
 		{
 			title: "Country Zone",
 			field: "hq_country",
 			editor: "autocomplete",
-			editorParams: editparams
+			editorParams: editparams,
+			visible: false
 		},
 		{
 			title: "Store",
@@ -136,13 +149,15 @@ var table = new Tabulator("#table", {
 					title: "Common Name",
 					field: "store_common_name",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				},
 				{
 					title: "Full Name",
 					field: "store_full_name",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				}
 			]
 		},
@@ -150,7 +165,8 @@ var table = new Tabulator("#table", {
 			title: "Brand - Single/Multi",
 			field: "brand",
 			editor: "autocomplete",
-			editorParams: editparams
+			editorParams: editparams,
+			visible: false
 		},
 		{
 			title: "Category",
@@ -158,30 +174,35 @@ var table = new Tabulator("#table", {
 					title: "1",
 					field: "category_1",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				},
 				{
 					title: "2",
 					field: "category_2",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				},
 				{
 					title: "3",
 					field: "category_3",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				},
 				{
 					title: "4",
 					field: "category_4",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				}, {
 					title: "5",
 					field: "category_5",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				}
 			]
 		},
@@ -189,7 +210,8 @@ var table = new Tabulator("#table", {
 			title: "Brand Website",
 			field: "brand_website",
 			editor: "autocomplete",
-			editorParams: editparams
+			editorParams: editparams,
+			visible: false
 		},
 		{
 			title: "HQ Address",
@@ -197,25 +219,29 @@ var table = new Tabulator("#table", {
 					title: "Town",
 					field: "brandhq_address_town",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				},
 				{
 					title: "City",
 					field: "brandhq_address_city",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				},
 				{
 					title: "State",
 					field: "brandhq_address_state",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				},
 				{
 					title: "Country",
 					field: "brandhq_address_country",
 					editor: "autocomplete",
-					editorParams: editparams
+					editorParams: editparams,
+					visible: false
 				}
 			]
 		},
@@ -223,21 +249,23 @@ var table = new Tabulator("#table", {
 			title: "Floor",
 			field: "floor",
 			editor: "autocomplete",
-			editorParams: editparams
+			editorParams: editparams,
+			visible: false
 		},
 		{
 			title: "Distribution",
 			field: "distribution",
 			editor: "autocomplete",
-			editorParams: editparams
+			editorParams: editparams,
+			visible: false
 		},
 		{
 			title: "Area (SQ.FT in Mil)",
 			field: "area",
 			editor: "input",
-			validator: "float"
-
-		},
+			validator: "float",
+			visible: false
+		}
 	]
 });
 
