@@ -435,6 +435,22 @@ $(document).ready(function () {
 			}
 		});
 
+		// Column 3 Dropdown
+		$('#colsvalues').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
+			// var selected = $(this).find('option').eq(clickedIndex).text();
+
+		
+			
+
+			if(newValue){
+				var selected = $(this).find('option');
+				console.log(selected);
+				
+			} else {
+				
+				
+			}
+		});
 
 		$('#selectcols1').html(selectcolopts);
 		$('#selectcols1').selectpicker('refresh');

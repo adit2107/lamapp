@@ -103,16 +103,14 @@ function columnVals(colname, newclick, selectedopts, selectedcolvals) {
 			var resuarr = [...new Set(uarr)];
 		
 				for (var vval of resuarr) {
-					console.log(coldbname);
 					selectedcolvals += `<option>${vval}</option>`;
 					selectedopts["col2"][colname] = [];
-					
+					console.log(selectedopts);
 				}
 
 			$('#colsvalues').append(selectedcolvals);
 			$('#colsvalues').selectpicker('refresh');
 
-			
 		})
 		.catch(error => console.error('Error:', error));
 		
