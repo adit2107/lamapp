@@ -63,13 +63,20 @@ module.exports = function(app)
 
     app.get('/list', authcontroller.validate, (req, res) => {
 
-        conn.connection.query('SELECT * FROM malls.mallslatest', (error, results, fields) => {
+        conn.connection.query(`SELECT * FROM ${process.env.DB_NAME}.${process.env.DB_TABLE} LIMIT 20`, (error, results, fields) => {
             if (error) throw error;
+            console.log('GOT');
             var cipher = encryptdata.encryptdata(results);
             res.render('pages/list.ejs', {data: {results: cipher}});  
         });
 
-      
+        // let sql = `SELECT ??, ?? FROM ${process.env.DB_NAME}.${process.env.DB_TABLE} WHERE ?? IN (?)`;
+        // let inserts = ['mallname', 'store_common_name', 'store_common_name', ['Adidas', 'Adidas Kids']];
+        // conn.connection.query(sql, inserts, (error, results, fields) => {
+        //     console.log(results);
+        //     res.send(results);
+        // });
+        
     });
 
     app.put('/list', (req, res) => {
@@ -78,7 +85,7 @@ module.exports = function(app)
             if (error) throw error;
             res.send("Updated cell");
         });
-
+       
     });
 
     app.delete('/list', (req,res) => {
@@ -90,17 +97,32 @@ module.exports = function(app)
         });
     });
 
+    app.post('/search', (req, res) => {
+        var resq = querygenerator.generateQuery(req.body);
+
+        conn.connection.query(resq.query, resq.values, (error, results, fields) => {
+            if (error) throw error;
+            
+            res.json({
+                results:results,
+                column: resq.values[0]
+            });
+        });
+    });
+
     app.post('/list', (req,res) => {
 
-        conn.connection.query('SELECT * FROM malls.mallslatest WHERE store_common_name IN (\'Adidas\', \'Adidas Kids\')', (error, results, fields) => {
-            if (error) throw error;
-            var cipher = encryptdata.encryptdata(results);
-            res.render('pages/list.ejs', {data: {results: cipher}});  
-        });
+        if (Object.keys(req.body).length === 0 ) {
+            conn.connection.query('INSERT INTO malls.mallslatest () VALUES ()', (error, results, fields) => {
+                if (error) throw error;
+                res.json(results);
+            } );
+        } else {
+        console.log(req.body.col1);
+        // console.log(req.body.col2);
+        // console.log(req.body.colvalues);
+        }
 
-        // conn.connection.query('INSERT INTO malls.mallslatest () VALUES ()', (error, results, fields) => {
-        //     if (error) throw error;
-        //     res.json(results);
-        // } );
+        
     });
 }

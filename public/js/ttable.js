@@ -3,6 +3,7 @@ const cipherresult = document.getElementById("results").innerHTML;
 var bytes = CryptoJS.AES.decrypt(cipherresult, 'poi212');
 var result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
+
 var editparams = {
 	values: true,
 	freetext: true,
@@ -367,13 +368,17 @@ $(document).ready(function () {
 		table.download("csv", "POIData.csv");
 	});
 
-	// filter modal
-	var filterdata = {
-		'selectcols': [],
-		'wherecols': []
+	// Filter modal
+
+	var selectedopts = {
+		col1: [],
+		col2: [
+			[{
+				'Mall Name': ['Phoenix Market City', 'Whitefield']
+			}]
+		]
 	}
 
-	// Filter modal
 	document.getElementById("filterbtn").addEventListener("click", function () {
 
 		$('#filterModal').modal({
@@ -384,36 +389,57 @@ $(document).ready(function () {
 		});
 
 		// Select picker options
+
 		var selectcolopts = '';
+
+		var selectedcolvals = '';
 
 		var selectcolsrc = table.getColumns(true).slice(2, );
 
 		function getelems(selectcolsrc) {
-			for (let [index, item] of selectcolsrc.entries()) {
 
+			for (let [index, item] of selectcolsrc.entries()) {
+				let parenttitle = item.getDefinition().title;
 				if (index == 1 || index == 6 || index == 8 || index == 10) {
-					selectcolopts += `<optgroup label="${item.getDefinition().title}">`;
-					getopts(item);
+					selectcolopts += `<optgroup label="${parenttitle}">`;
+					getopts(parenttitle, item);
 					selectcolopts += "</optgroup>";
 				} else {
-					var option = "<option>" + item.getDefinition().title + "</option>";
+					var option = "<option>" + parenttitle + "</option>";
 					selectcolopts += option;
 				}
 			}
 		}
 
-		function getopts(item) {
-
+		function getopts(parenttitle, item) {
 			var optgs = item.getDefinition().columns;
 			for (itemtitle of optgs) {
-
-				selectcolopts += "<option>" + itemtitle.title + "</option>";
-
+				selectcolopts += "<option>" + parenttitle + " - " + itemtitle.title + "</option>";
 			}
 
 		}
 
 		getelems(selectcolsrc);
+
+		$('#selectcols2').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
+			var selectedD = $(this).find('option').eq(clickedIndex).text();
+
+			getColValues(selectedD, newValue, selectedopts, selectedcolvals);
+		});
+
+
+
+		// $('.selectpick').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
+		// 	var selectedD = $(this).find('option').eq(clickedIndex).text();
+		// 	console.log(selectedD, newValue, clickedIndex);
+
+		// 	getColValues(selectedD, newValue, clickedIndex);
+
+		// // $('#colsvalues').html(selectcolvals);
+		// // $('#colsvalues').selectpicker('refresh');
+
+		// });
+
 
 		$('#selectcols1').html(selectcolopts);
 		$('#selectcols1').selectpicker('refresh');
@@ -421,22 +447,145 @@ $(document).ready(function () {
 		$('#selectcols2').html(selectcolopts);
 		$('#selectcols2').selectpicker('refresh');
 
+		$("#colsvalues").selectpicker();
 	});
 
 	document.getElementById("filtertablebtn").addEventListener("click", function () {
+
+		console.log(selectedopts);
 		fetch('/list', {
-			method: 'POST',
-			body: '',
-			headers: {}
-		}).then(res => res.json())
-		.then(response => {
-			
-		})
-		.catch(error => console.error('Error:', error));
+				method: 'POST',
+				body: JSON.stringify(selectedopts),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(res => res.text())
+			.then(response => {
+				console.log('Success:', JSON.stringify(response));
+			})
+			.catch(error => console.error('Error:', error));
 	});
 
 	document.getElementById("modal-close").addEventListener("click", function () {
 		$('.selectpick').selectpicker('destroy');
 	});
-
 });
+
+function getColValues(colname, newclick, selectedopts, selectedcolvals) {
+
+	switch (colname) {
+		case 'Mall Name':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Google Address - Town':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Google Address - City':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Google Address - State':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Google Address - Country':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Mall Website':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Cluster (Geography)':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Headquarters':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Country Zone':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Store - Common Name':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Brand - Single/Multi':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Category - 1':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Category - 2':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Category - 3':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Category - 4':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Category - 5':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Brand Website':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'HQ Address - Town':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'HQ Address - City':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'HQ Address - State':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'HQ Address - Country':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Floor':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Distribution':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+		case 'Area (SQ.FT in Mil)':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
+	}
+}
+
+function columnVals(colname, newclick, selectedopts, selectedcolvals) {
+	let uarr = [];
+
+	fetch('/search', {
+			method: 'POST',
+			body: JSON.stringify({
+				colname
+			}),
+			headers: {
+				'Content-Type': 'application/json'
+			}
+		}).then(res => res.json())
+		.then(response => {
+			for (col of response.results) {
+				uarr.push(col[response.column]);
+			}
+			selectedcolvals += `<optgroup label="${colname}">`
+			let resuarr = [...new Set(uarr)];
+			if (newclick) {
+
+				for (vval of resuarr) {
+					selectedcolvals += `<option>${vval}</option>`
+					selectedopts.col2.push(response.column);
+
+				}
+			} else {
+				for (vval of resuarr) {
+					selectedcolvals.replace(`<option>${vval}</option>`, ``);
+					selectedopts.col2 = selectedopts.col2.filter(item => item !== response.column);
+					//selectedopts.colvalues = selectedopts.colvalues.filter(item => item !== vval);
+					$('#colsvalues').html(selectedcolvals);
+					$('#colsvalues').selectpicker('refresh');
+				}
+			}
+			selectedcolvals += `</optgroup>`;
+			$('#colsvalues').append(selectedcolvals);
+			$('#colsvalues').selectpicker('refresh');
+		})
+		.catch(error => console.error('Error:', error));
+}
