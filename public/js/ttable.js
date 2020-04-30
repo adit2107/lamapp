@@ -2,6 +2,7 @@ import retColValues from './getColValues.js'
 import selectedopts from './selectedopts.js'
 
 const cipherresult = document.getElementById("results").innerHTML;
+document.getElementById("results").remove();
 
 var bytes = CryptoJS.AES.decrypt(cipherresult, 'poi212');
 var result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
@@ -495,7 +496,8 @@ $(document).ready(function () {
 				}
 			}).then(res => res.text())
 			.then(response => {
-				console.log('Success:', JSON.stringify(response));
+				//console.log('Success:', JSON.stringify(response));
+				window.location='/list/filter';
 			})
 			.catch(error => console.error('Error:', error));
 
@@ -504,6 +506,9 @@ $(document).ready(function () {
 			selectedopts["col2"] = {};
 			$("#colsvalues").html('').selectpicker('refresh');
 			$('.selectpick').selectpicker('destroy');
+
+			
+
 	});
 
 	document.getElementById("modal-close").addEventListener("click", function () {

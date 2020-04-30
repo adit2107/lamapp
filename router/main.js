@@ -20,7 +20,8 @@ module.exports = function(app)
     app.use(session({
         saveUninitialized: true,
         resave: 'true',
-        secret: 'secret'
+        secret: 'secret',
+        cookie: { secure: false }
     })); 
 
     app.use(flash());
@@ -62,21 +63,13 @@ module.exports = function(app)
     });
 
     app.get('/list', authcontroller.validate, (req, res) => {
-
-        conn.connection.query(`SELECT * FROM ${process.env.DB_NAME}.${process.env.DB_TABLE} LIMIT 20`, (error, results, fields) => {
+       
+        conn.connection.query(`SELECT * FROM ${process.env.DB_NAME}.${process.env.DB_TABLE} LIMIT 5`, (error, results, fields) => {
             if (error) throw error;
-            console.log('GOT');
+            
             var cipher = encryptdata.encryptdata(results);
             res.render('pages/list.ejs', {data: {results: cipher}});  
         });
-
-        // let sql = `SELECT ??, ?? FROM ${process.env.DB_NAME}.${process.env.DB_TABLE} WHERE ?? IN (?)`;
-        // let inserts = ['mallname', 'store_common_name', 'store_common_name', ['Adidas', 'Adidas Kids']];
-        // conn.connection.query(sql, inserts, (error, results, fields) => {
-        //     console.log(results);
-        //     res.send(results);
-        // });
-        
     });
 
     app.put('/list', (req, res) => {
@@ -113,14 +106,25 @@ module.exports = function(app)
     app.post('/list', (req,res) => {
 
         if (Object.keys(req.body).length === 0 ) {
-            conn.connection.query('INSERT INTO malls.mallslatest () VALUES ()', (error, results, fields) => {
+            conn.connection.query(`INSERT INTO ${process.env.DB_NAME}.${process.env.DB_TABLE} () VALUES ()`, (error, results, fields) => {
                 if (error) throw error;
                 res.json(results);
             } );
         } else {
-            querygenerator.generateQuery(req.body);
-        }
-
-        
+            var resq = querygenerator.generateQuery(req.body);
+            
+            conn.connection.query(resq, (error, results, fields) => {
+                if (error) throw error;
+                var cipher = encryptdata.encryptdata(results);
+                req.session.qres = cipher;
+                res.redirect('/list/filter');
+            });
+        }  
     });
+    
+    app.get('/list/filter', (req,res) => {
+        res.render('pages/list.ejs', {data: {results: req.session.qres}});  
+    });
+   
 }
+
