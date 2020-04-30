@@ -487,8 +487,6 @@ $(document).ready(function () {
 		selectedopts["col3"] = selected;
 
 		
-
-		
 		fetch('/list', {
 				method: 'POST',
 				body: JSON.stringify(selectedopts),
@@ -501,13 +499,17 @@ $(document).ready(function () {
 			})
 			.catch(error => console.error('Error:', error));
 
-			$('#colsvalues').selectpicker('deselectAll');
+			
+			selectedopts.col1.splice(0, );
+			selectedopts["col2"] = {};
 			$("#colsvalues").html('').selectpicker('refresh');
-
+			$('.selectpick').selectpicker('destroy');
 	});
 
 	document.getElementById("modal-close").addEventListener("click", function () {
-		$('#colsvalues').selectpicker('deselectAll');
+		
+		selectedopts.col1.splice(0, );
+		selectedopts["col2"] = {};
 		$("#colsvalues").html('').selectpicker('refresh');
 		$('.selectpick').selectpicker('destroy');
 	});
