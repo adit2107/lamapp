@@ -372,6 +372,22 @@ $(document).ready(function () {
 		table.download("csv", "POIData.csv");
 	});
 
+	// reset modal
+	document.getElementById("resettablebtn").addEventListener("click", function () {
+		$('#resetModal').modal({
+			show: true,
+			keyboard: true,
+			focus: true,
+			handleUpdate: true
+		});
+	});
+
+	document.getElementById("resetmodalbtn").addEventListener("click", function () {
+		$('#resetModal').modal({
+			show: false
+		});
+	});
+
 	// Filter modal
 
 	document.getElementById("filterbtn").addEventListener("click", function () {

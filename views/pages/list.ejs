@@ -19,7 +19,7 @@
         <button id="deleterowbtn" type="button" class="btn btn-outline-primary">Delete Row(s)</button>
         <button id="filterbtn" type="button" data-toggle="modal" data-target="#filterModal" class="btn btn-outline-primary">Filter Table</button>
         <button id="download-csv" type="button" class="btn btn-outline-primary" >Download CSV</button>
-        <button id="resettablebtn" type="button" class="btn btn-outline-primary" href="/list">Reset Table</button>
+        <button id="resettablebtn" type="button" data-toggle="modal" data-target="#resetModal" class="btn btn-outline-primary">Reset Table</button>
       </div>
      
         <div id="errdeletetoast" class="toast hide position-absolute mid-right" data-autohide="true">
@@ -101,7 +101,7 @@
 </div>
 
 <!-- RESET Button-->
-<div class="modal fade hide" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="filterModal" aria-hidden="true">
+<div class="modal fade hide" id="resetModal" tabindex="-1" role="dialog" aria-labelledby="resetModal" aria-hidden="true">
   <div class="modal-dialog modal-lg" role="document">
     <div class="modal-content">
       <div class="modal-header">
@@ -111,15 +111,14 @@
         </button>
       </div>
       <div class="modal-body">
-        <form>
-          <div class="form-group" action="/list" method="get">
+        <form action="/list/filter" method="get">
+          <div class="form-group">
             <label for="limitinputval">Limit columns to: </label>
-            <input type="number" class="form-control" id="limitinputval" placeholder="Enter number">
-          
-          </div>
-          
+            <input type="number" min='1' class="form-control" id="limitinputval" placeholder="Enter number" name="limitnum">
+          </div>  
           <div class="modal-footer">
-            <button type="submit" id="resetmodalbtn" class="btn btn-primary" data-dismiss="modal">Reset table</button>
+            
+            <button type="submit" id="resetmodalbtn" class="btn btn-primary">Retrieve table</button>
           </div>
         </form>
         
