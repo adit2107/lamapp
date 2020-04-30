@@ -439,15 +439,34 @@ $(document).ready(function () {
 		$('#colsvalues').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
 			// var selected = $(this).find('option').eq(clickedIndex).text();
 
-		
-			
-
+	
 			if(newValue){
-				var selected = $(this).find('option');
-				console.log(selected);
+				
+				for(var item in selectedopts.col2){
+				
+
+				// [...document.getElementsByClassName(item)].forEach(
+				// 	(element, index, array) => {
+					
+				// 	}
+				// );
+
+				
+				
+				}
+
+				
 				
 			} else {
-				
+				// for(var item in selectedopts.col2){
+                
+				// 	[...document.getElementsByClassName(item)].forEach(
+				// 		(element, index, array) => {
+							
+				// 		}
+				// 	);
+					
+				// 	}
 				
 			}
 		});
@@ -463,7 +482,13 @@ $(document).ready(function () {
 
 	document.getElementById("filtertablebtn").addEventListener("click", function () {
 
-		console.log(selectedopts);
+		var selected = $("#colsvalues").val();
+		console.log("selected: ", selected);
+		selectedopts["col3"] = selected;
+
+		
+
+		
 		fetch('/list', {
 				method: 'POST',
 				body: JSON.stringify(selectedopts),
@@ -475,9 +500,15 @@ $(document).ready(function () {
 				console.log('Success:', JSON.stringify(response));
 			})
 			.catch(error => console.error('Error:', error));
+
+			$('#colsvalues').selectpicker('deselectAll');
+			$("#colsvalues").html('').selectpicker('refresh');
+
 	});
 
 	document.getElementById("modal-close").addEventListener("click", function () {
+		$('#colsvalues').selectpicker('deselectAll');
+		$("#colsvalues").html('').selectpicker('refresh');
 		$('.selectpick').selectpicker('destroy');
 	});
 });

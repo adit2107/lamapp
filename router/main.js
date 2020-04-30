@@ -118,9 +118,7 @@ module.exports = function(app)
                 res.json(results);
             } );
         } else {
-        console.log(req.body.col1);
-        // console.log(req.body.col2);
-        // console.log(req.body.colvalues);
+            querygenerator.generateQuery(req.body);
         }
 
         

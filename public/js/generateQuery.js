@@ -2,7 +2,6 @@ let coljson = require('../files/fieldmap.json');
 
 exports.generateQuery = (queryparams) => {
 
-    
 
     var values = [];
     

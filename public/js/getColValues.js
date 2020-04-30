@@ -84,6 +84,7 @@ function columnVals(colname, newclick, selectedopts, selectedcolvals) {
 	let uarr = [];
 
 	if(newclick){
+		selectedopts["col2"][colname] = [];
 		fetch('/search', {
 			method: 'POST',
 			body: JSON.stringify({
@@ -94,21 +95,27 @@ function columnVals(colname, newclick, selectedopts, selectedcolvals) {
 			}
 		}).then(res => res.json())
 		.then(response => {
+			
 			let coldbname = response.column;
 			for (var col of response.results) {
 				uarr.push(col[coldbname]);
+			
 			}
 			
 			selectedcolvals += `<optgroup label="${colname}">`
 			var resuarr = [...new Set(uarr)];
-		
+            
 				for (var vval of resuarr) {
-					selectedcolvals += `<option>${vval}</option>`;
-					selectedopts["col2"][colname] = [];
-					console.log(selectedopts);
+				
+					selectedcolvals += `<option class="${colname}">${vval}</option>`;
 				}
-
+			
 			$('#colsvalues').append(selectedcolvals);
+			var elements = document.getElementsByClassName(colname);
+			for (var i =0; i< elements.length; i++){
+				if( elements[i].textContent.trim() === '' )
+				elements[i].parentNode.removeChild(elements[i]);
+			}
 			$('#colsvalues').selectpicker('refresh');
 
 		})
@@ -121,7 +128,7 @@ function columnVals(colname, newclick, selectedopts, selectedcolvals) {
 				$("#colsvalues").children().remove(`optgroup[label="${colname}"]`);
 				$('#colsvalues').selectpicker('refresh');
 				delete selectedopts.col2[colname];
-				console.log(selectedopts);
+	
 			}
 		
 		}
