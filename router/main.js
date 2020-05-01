@@ -41,11 +41,12 @@ module.exports = function(app)
 
     app.get('/login', (req,res) => {
         console.log(req.user);
-        if(req.user){
-        res.render('pages/success.ejs', {data: {connection: req.user, logout: false}});
-        } else {
-        res.render('pages/login.ejs', {data:{logout: true}});
-        }
+        // if(req.user){
+        // res.render('pages/success.ejs', {data: {connection: req.user, logout: false}});
+        // } else {
+        // res.render('pages/login.ejs', {data:{logout: true}});
+        // }
+        res.redirect('/');
     });
 
     app.get('/loginerror' ,(req, res) => {
@@ -56,11 +57,16 @@ module.exports = function(app)
         res.render('pages/success.ejs',{data: {connection: req.user, logout: false}})
      });
 
-     app.get('/logout', (req,res) => {
+    app.get('/userlogout', (req,res) => {
+        res.redirect(`https://mallapp21.auth.us-east-1.amazoncognito.com/logout?client_id=7j5upal5ol8dh05qbpn2n1hbk8&logout_uri=http://localhost:3030/logout`);
+    });
+
+    app.get('/logout', (req,res) => {
         res.clearCookie('user', { path: '/' });
         res.clearCookie('accesstoken', {path: '/'});
         res.render('pages/logout.ejs', {data:{logout: true}});
     });
+
 
     app.get('/list', authcontroller.validate, (req, res) => {
        
