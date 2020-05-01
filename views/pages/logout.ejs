@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<head>
+    <title>Mall App</title>
+    <%- include('../partials/head') %>
+    
+</head>
+<body class="container-fluid">
+<header>
+        <%- include('../partials/header') %>
+</header>
+
+<main>
+        <div class="row">
+            <div class="col-lg-6 col-md-6 col-sm-6 col-xs-6 offset-3 float-md-center">    
+                <div class="jumbotron jumbotron-fluid">
+                    <div class="container text-center">
+                            <h1 class="display-4 ">You are now logged out.</h1>
+                            <hr class="my-4">
+                            <p id="" class="lead"></p>
+                            <button id="logoutbtn2" class="btn btn-primary btn-lg text-center">Sign In</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+</main>
+</body>
+<script type="text/javascript">
+
+    document.getElementById("logoutbtn2").addEventListener("click" , (e) => {
+        e.preventDefault();
+        window.location.replace("https://mallapp21.auth.us-east-1.amazoncognito.com/login?response_type=code&client_id=7j5upal5ol8dh05qbpn2n1hbk8&redirect_uri=http://localhost:3030/&state=STATE&scope=openid+profile+aws.cognito.signin.user.admin");
+    });
+    
+</script>
+</html>
