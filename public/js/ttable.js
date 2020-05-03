@@ -9,11 +9,11 @@ var result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
 
 var editparams = {
-	values: true,
-	freetext: true,
-	allowEmpty: false,
-	verticalNavigation: "hybrid"
-}
+  values: true,
+  freetext: true,
+  allowEmpty: false,
+  verticalNavigation: "hybrid",
+};
 
 var rowindices = [];
 

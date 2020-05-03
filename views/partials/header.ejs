@@ -1,31 +1,49 @@
+<nav class="navbar navbar-expand-sm navbar-light p-2 rounded">
+  <a class="navbar-brand" href="/loginsuccess">Place of Interest</a>
+  <button
+    class="navbar-toggler"
+    type="button"
+    data-toggle="collapse"
+    data-target="#navbarSupportedContent"
+    aria-controls="navbarSupportedContent"
+    aria-expanded="false"
+    aria-label="Toggle navigation"
+  >
+    <span class="navbar-toggler-icon"></span>
+  </button>
 
-<nav class="navbar navbar-expand-lg navbar-dark bg-primary ">
-        <a class="navbar-brand" href="/">Place of Interest</a>
-        <button class="navbar-toggler" type="button" href="/loginsuccess" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-          <span class="navbar-toggler-icon"></span>
-        </button>
-      
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-          <ul class="navbar-nav mr-auto">
-            <li class="nav-item active">
-              <a class="nav-link" href="/loginsuccess">Home<span class="sr-only">(current)</span></a>
-            </li>
-            <% if (data.logout) { %>
-            <li class="nav-item">
-              <a class="nav-link" style="display: none" href="/list">Modify</a>
-            </li>
-            <% } else { %>
-              <li class="nav-item">
-                <a class="nav-link" href="/list">Modify</a>
-              </li>
-              <% } %>
-            </ul>
-            <% if (data.logout) { %>
-              <button id="logoutbtn" style="display: none" class="btn btn-outline-light" type="button">Logout</button>
-              <% } else { %>
-                <button id="logoutbtn" class="btn btn-outline-light" type="button">Logout</button>
-                <% } %>
-        </div>
-      </nav>
+  <div class="collapse navbar-collapse" id="navbarSupportedContent">
+    <ul class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a class="nav-link" href="/loginsuccess"
+          >Home<span class="sr-only">(current)</span></a
+        >
+      </li>
+      <% if (data.logout) { %>
+      <li class="nav-item">
+        <a class="nav-link" style="display: none;" href="/list">Modify</a>
+      </li>
+      <% } else { %>
+      <li class="nav-item">
+        <a class="nav-link" href="/list">Modify</a>
+      </li>
+      <% } %>
+    </ul>
+    <% if (data.logout) { %>
+    <button
+      id="logoutbtn"
+      style="display: none;"
+      class="btn btn-outline-light"
+      type="button"
+    >
+      Logout
+    </button>
+    <% } else { %>
+    <button id="logoutbtn" class="btn btn-outline-dark" type="button">
+      Logout
+    </button>
+    <% } %>
+  </div>
+</nav>
 
 <script type="text/javascript" src="/js/logout.js"></script>

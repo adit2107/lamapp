@@ -2,6 +2,7 @@ DB_HOST=
 DB_USER=
 DB_PASS=
 DB_NAME=
+DB_TABLE=
 PORT=
 cog_client_id=
 cog_client_name=

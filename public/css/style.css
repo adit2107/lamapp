@@ -1,35 +1,203 @@
+@font-face {
+  font-family: "Avenir";
+  src: url("../fonts/avenir/AvenirLTStd-Book.otf") format("opentype");
+}
+
+@font-face {
+  font-family: "Gotham-thin";
+  src: url("../fonts/Gotham-Thin.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Gotham-medium";
+  src: url("../fonts/Gotham-Medium.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Calibri";
+  src: url("//db.onlinewebfonts.com/t/a78cfad3beb089a6ce86d4e280fa270b.eot");
+  src: url("//db.onlinewebfonts.com/t/a78cfad3beb089a6ce86d4e280fa270b.eot?#iefix")
+      format("embedded-opentype"),
+    url("//db.onlinewebfonts.com/t/a78cfad3beb089a6ce86d4e280fa270b.woff2")
+      format("woff2"),
+    url("//db.onlinewebfonts.com/t/a78cfad3beb089a6ce86d4e280fa270b.woff")
+      format("woff"),
+    url("//db.onlinewebfonts.com/t/a78cfad3beb089a6ce86d4e280fa270b.ttf")
+      format("truetype"),
+    url("//db.onlinewebfonts.com/t/a78cfad3beb089a6ce86d4e280fa270b.svg#Calibri")
+      format("svg");
+}
+
+body {
+  background: #fff;
+}
+
 #table_wrapper {
-    margin-top: 25px;
+  margin-top: 25px;
 }
 
 thead input {
-    width: 100%;
+  width: 100%;
 }
 
 form {
-    margin-top: 25px;
+  margin-top: 25px;
 }
 
 .jumbotron {
-    margin-top: 50px;
-    background-color: whitesmoke;
+  margin-top: 50px;
+  background-color: #fff;
 }
 
 .toast {
-    z-index: 10;
+  z-index: 50;
 }
 
-.btngroup{
-    padding-top: 5px;
+.btngroup {
+  padding-top: 5px;
 }
 
-.mid-right { 
-    right: 0; 
-    transform: translateY(-50%); 
-} 
+.mid-right {
+  right: 0;
+  transform: translateY(-50%);
+}
+
+#table .tabulator-col-title {
+  text-align: center;
+}
+
+.container-fluid {
+  padding-left: 0;
+  padding-right: 0;
+  margin-left: 0;
+  margin-right: 0;
+} /*remove padding and margin from container fluid */
+
+/* header .navbar {
+  background: #cdcdcd;
+} */
+
+.navbar-brand {
+  font-size: 25px;
+}
+
+.nav-link {
+  color: #ace6f6;
+}
 
 .navbar {
-    border-radius: 5px;
+  /* border-radius: 3px; */
+  /* border-bottom-left-radius: 3px; */
+  border-bottom-right-radius: 3px;
+  box-shadow: 0px 0.5px 3px 1px #b4b4b4;
+  border-bottom: 0.1px solid #b4b4b4;
+}
+
+#navbarSupportedContent .nav-link:hover {
+  color: #007bff;
+  border-bottom: solid 0.5px #007bff;
+}
+
+#navbarSupportedContent .nav-link {
+  color: #1f1f1f;
+}
+
+#table .tabulator-col {
+  /* background: #a4a4a4; */
+  background: whitesmoke;
+  /* border-right: solid #a4a4a4 1px;
+  border-bottom: solid #a4a4a4 1px; */
+  border: solid #a4a4a4 0.1px;
+  border-top: none;
+  border-left: none;
+}
+
+#table .tabulator-col-title {
+  text-transform: uppercase;
+  font-size: 13px;
+  color: #909090;
+}
+
+#table .tabulator-row-odd {
+  /* background: whitesmoke; */
+  /* padding: 10px 10px !important; */
+  box-shadow: 5px 5px 15px #a4a4a4;
+}
+
+#table .tabulator-row-even {
+  /* padding: 10px 10px !important; */
+  /* border: solid #cdcdcd 0.5px; */
+  box-shadow: 5px 5px 15px grey;
+}
+
+#table .tabulator-cell {
+  color: #2f4f4f;
+  padding: 10px 15px !important ;
+  font-family: "Calibri";
+}
+
+/* .btnparent {
+  margin: 20px auto 55px 10px;
+} */
+
+#modifyproceed {
+  background: #00b0d9;
+  color: white;
+}
+
+.btngroup .btn:hover {
+  border: 0.5px solid white;
+}
+
+.btngroup .btn {
+  /* border: solid 0.5px #226089; */
+  color: white;
+  margin: 5px 10px 5px 5px;
+  text-transform: uppercase;
+  font-size: 15px;
+  padding-top: 7px;
+  padding-right: 10px;
+}
+.btngroup .btn .button-logo {
+  margin-bottom: 10px;
+}
+
+.btngroup.flex-container {
+  display: flex;
+  flex-wrap: wrap;
+  background-color: #00b0d9;
+  margin-bottom: 0px;
+  justify-content: space-around;
+}
+
+.btngroup.flex-container button {
+  min-width: 50px;
+  margin-left: 20px;
+}
+
+.table-container {
+  width: 100%;
+  /* margin-left: 20px; */
+}
+
+.table-container.container-fluid {
+  /* margin-left: 20px; */
+  /* margin: 20px auto 55px 10px; */
+}
+
+/* .container-fluid.btnparent {
+  margin-bottom: 50px;
+} */
+
+/* newchange */
+
+.body-container.container-fluid {
+  margin-left: 20px;
+  margin-top: 20px;
+}
+
+.fa {
+  padding-bottom: 10px;
 }
 
 #table .tabulator-col-title {

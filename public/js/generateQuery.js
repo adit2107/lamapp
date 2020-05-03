@@ -58,5 +58,4 @@ exports.generateQuery = (queryparams) => {
         var kq = knex.select(kjson.col1).from(`${process.env.DB_NAME}.${process.env.DB_TABLE}`).toSQL().toNative();
         return kq.sql;
     }
-
 }

@@ -4,27 +4,13 @@
     <title>Mall App</title>
     <%- include('../partials/head') %> 
 </head>
+<header>
+  <%- include('../partials/header') %>
+</header>
 
-<body class="container-fluid">
-    <header>
-        <%- include('../partials/header') %>
-    </header>
-
-    <span id="results" style="display: none;"><%= data.results %></span>
-
-    <div class="container-fluid position-relative" style="height: 50px;">
-      
-      <div class="btngroup position-absolute mid-center">
-        <button id="insertrowbtn" type="button" class="btn btn-outline-primary">Insert Row</button>
-        <button id="deleterowbtn" type="button" class="btn btn-outline-primary">Delete Row(s)</button>
-        <button id="filterbtn" type="button" data-toggle="modal" data-target="#filterModal" class="btn btn-outline-primary">Filter Table</button>
-        <button id="download-csv" type="button" class="btn btn-outline-primary" >Download CSV</button>
-        <button id="resettablebtn" type="button" data-toggle="modal" data-target="#resetModal" class="btn btn-outline-primary">Reset Table</button>
-      </div>
-     
-        <div id="errdeletetoast" class="toast hide position-absolute mid-right" data-autohide="true">
+        <div id="errdeletetoast" class="toast hide" data-autohide="true">
           <div class="toast-header">
-            <strong class="mr-auto text-warning">Information</strong>
+            <strong class="mr-auto text-warning mid-right">Information</strong>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -34,9 +20,9 @@
           </div>
         </div>
 
-        <div id="validfailtoast" class="toast hide position-absolute mid-right" data-autohide="true">
+        <div id="validfailtoast" class="toast hide" data-autohide="true">
           <div class="toast-header">
-            <strong class="mr-auto text-danger">Information</strong>
+            <strong class="mr-auto text-danger mid-right">Information</strong>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
@@ -45,7 +31,7 @@
             This field does not accept characters.
           </div>
         </div>
-        <div id="successdeletetoast" class="toast hide position-absolute mid-right" data-autohide="true">
+        <div id="successdeletetoast" class="toast hide mid-right" data-autohide="true">
           <div class="toast-header">
             <strong class="mr-auto text-success">Information</strong>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
@@ -56,7 +42,7 @@
             Deleted rows.
           </div>
         </div>
-        <div id="successinserttoast" class="toast hide position-absolute mid-right" data-autohide="true">
+        <div id="successinserttoast" class="toast hide mid-right" data-autohide="true">
           <div class="toast-header">
             <strong class="mr-auto text-success">Information</strong>
             <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
@@ -67,10 +53,22 @@
             Inserted row. Click on an empty field to update data.
           </div>
         </div>
-      </div>
+<body class="container-fluid">
 
-    <table id="table" class="table table-bordered table-sm">
+    <span id="results" style="display: none;"><%= data.results %></span>
+      <div class="btngroup flex-container">
+        <button id="insertrowbtn" type="button" class="btn"><i class="fa fa-plus fa-2x" style="padding-bottom:10px;"></i><figcaption class="caption"> Insert Row</figcaption> </button>
+        <button id="deleterowbtn" type="button" class="btn"><i class="fa fa-minus  fa-2x"></i><figcaption class="caption">Delete Row(s)</figcaption></button>
+        <button id="filterbtn" type="button" data-toggle="modal" data-target="#filterModal" class="btn"><i class="fa fa-filter fa-2x"></i><figcaption class="caption">Filter Table</figcaption></button>
+        <button id="download-csv" type="button" class="btn" ><i class="fa fa-download fa-2x"></i><figcaption class="caption">Download CSV</figcaption></button>
+        <button id="resettablebtn" type="button" data-toggle="modal" data-target="#resetModal" class="btn"><i class="fa fa-filter fa-2x"></i><figcaption class="caption">Reset table</figcaption></button>
+      </div>
+      
+      
+    <div class="table-container container-fluid">
+    <table id="table" class="table table-borderless table-sm">
     </table>
+  </div>
 
 <!-- Filter Modal -->
 <div class="modal fade hide" id="filterModal" tabindex="-1" role="dialog" aria-labelledby="filterModal" aria-hidden="true">
@@ -131,5 +129,6 @@
 </body>
 
 <script type="module" src="/js/ttable.js"></script>
+
 
 </html>
