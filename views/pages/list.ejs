@@ -81,18 +81,28 @@
         </button>
       </div>
       <div class="modal-body">
-        Select Column(s):
-        <select id="selectcols1" class="selectpick" multiple>
-        </select>
-        WHERE:
-        <select id="selectcols2" class="selectpick" multiple> 
-        </select>
-        IS:
-        <select id="colsvalues" class="selectpick" data-live-search="true" multiple> 
-        </select>
+        
+        <div class="filteritem">
+          <label for="selectcols1">Select Column(s):</label>
+          <select id="selectcols1" class="selectpick" multiple>
+          </select>
+        </div>
+        
+        <div class="filteritem">
+          <label for="selectcols1">Where:</label>
+          <select id="selectcols2" class="selectpick" multiple> 
+          </select>
+        </div>
+
+        <div class="filteritem">
+          <label for="selectcols1">In:</label>
+          <select id="colsvalues" class="selectpick" data-live-search="true" multiple> 
+          </select>
+        </div>
+       
       </div>
       <div class="modal-footer">
-        <button type="button" id="filtertablebtn" class="btn btn-primary" data-dismiss="modal">Filter Selection</button>
+        <button type="button" id="filtertablebtn" class="btn" data-dismiss="modal">Filter Selection</button>
       </div>
     </div>
   </div>

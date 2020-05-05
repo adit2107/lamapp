@@ -394,7 +394,8 @@ $(document).ready(function () {
 
 		$('#filterModal').modal({
 			show: true,
-			keyboard: true,
+			keyboard: false,
+			backdrop: 'static',
 			focus: true,
 			handleUpdate: true
 		});

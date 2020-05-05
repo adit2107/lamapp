@@ -32,6 +32,8 @@ body {
   background: #fff;
 }
 
+
+
 #table_wrapper {
   margin-top: 25px;
 }
@@ -203,3 +205,23 @@ form {
 #table .tabulator-col-title {
     text-align: center;
 }
+
+#filterModal .modal-body {
+display: flex;
+flex-direction: column;
+}
+
+#filtertablebtn {
+  background-color: #00b0d9;
+  color: white;
+}
+
+#resetmodalbtn {
+  background-color: #00b0d9;
+  color: white;
+}
+
+.filteritem {
+  padding: 20px;
+}
+
