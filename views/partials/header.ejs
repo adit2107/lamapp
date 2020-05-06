@@ -29,6 +29,17 @@
       </li>
       <% } %>
     </ul>
+   
+    <div class="dropdown">
+        <button class="btn btn-outline-dark dropdown-toggle" type="button" id="changetabledrop" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+         Select Table
+        </button>
+        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+          <a id="table1" class="dropdown-item" href="#">Table 1</a>
+          <a id ="table2" class="dropdown-item" href="#">Table 2</a>
+
+        </div>
+      </div>
     <% if (data.logout) { %>
     <button
       id="logoutbtn"
@@ -43,6 +54,7 @@
       Logout
     </button>
     <% } %>
+ 
   </div>
 </nav>
 

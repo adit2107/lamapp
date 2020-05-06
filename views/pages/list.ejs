@@ -4,55 +4,59 @@
     <title>Mall App</title>
     <%- include('../partials/head') %> 
 </head>
+
+<div class="position-absolute w-100 d-flex flex-column p-10">
+    <div id="errdeletetoast" class="toast hide ml-auto" data-autohide="true">
+      <div class="toast-header">
+        <strong class="mr-auto text-warning mid-right">Information</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="toast-body">
+        Please select row(s) to delete!
+      </div>
+    </div>
+  
+    <div id="validfailtoast" class="toast hide ml-auto" data-autohide="true">
+      <div class="toast-header">
+        <strong class="mr-auto text-danger mid-right">Information</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="toast-body">
+        This field does not accept characters.
+      </div>
+    </div>
+    <div id="successdeletetoast" class="toast hide ml-auto" data-autohide="true">
+      <div class="toast-header">
+        <strong class="mr-auto text-success">Information</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="toast-body">
+        Deleted rows.
+      </div>
+    </div>
+    <div id="successinserttoast" class="toast hide ml-auto" data-autohide="true">
+      <div class="toast-header">
+        <strong class="mr-auto text-success">Information</strong>
+        <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="toast-body">
+        Inserted row. Click on an empty field to update data.
+      </div>
+    </div>
+  </div>
 <header>
   <%- include('../partials/header') %>
 </header>
 
-        <div id="errdeletetoast" class="toast hide" data-autohide="true">
-          <div class="toast-header">
-            <strong class="mr-auto text-warning mid-right">Information</strong>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="toast-body">
-            Please select row(s) to delete!
-          </div>
-        </div>
-
-        <div id="validfailtoast" class="toast hide" data-autohide="true">
-          <div class="toast-header">
-            <strong class="mr-auto text-danger mid-right">Information</strong>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="toast-body">
-            This field does not accept characters.
-          </div>
-        </div>
-        <div id="successdeletetoast" class="toast hide mid-right" data-autohide="true">
-          <div class="toast-header">
-            <strong class="mr-auto text-success">Information</strong>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="toast-body">
-            Deleted rows.
-          </div>
-        </div>
-        <div id="successinserttoast" class="toast hide mid-right" data-autohide="true">
-          <div class="toast-header">
-            <strong class="mr-auto text-success">Information</strong>
-            <button type="button" class="ml-2 mb-1 close" data-dismiss="toast" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="toast-body">
-            Inserted row. Click on an empty field to update data.
-          </div>
-        </div>
+        
 <body class="container-fluid">
 
     <span id="results" style="display: none;"><%= data.results %></span>
@@ -68,6 +72,9 @@
     <div class="table-container container-fluid">
     <table id="table" class="table table-borderless table-sm">
     </table>
+
+    <table id="table2" class="table table-borderless table-sm">
+      </table>
   </div>
 
 <!-- Filter Modal -->

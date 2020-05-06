@@ -7,7 +7,6 @@ document.getElementById("results").remove();
 var bytes = CryptoJS.AES.decrypt(cipherresult, 'poi212');
 var result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
-
 var editparams = {
   values: true,
   freetext: true,
@@ -18,11 +17,15 @@ var editparams = {
 var rowindices = [];
 
 var table = new Tabulator("#table", {
-	//load row data from array
 	layout: "fitData",
+	// persistence:{
+	// 	columns: true
+	// },
+	// persistenceMode: "cookie",
 	addRowPos: "top",
 	pagination: "local",
 	paginationSize: 10,
+	paginationSizeSelector:[5, 10, 15, 20, 25],
 	resizableRows: true,
 	movableRows: true,
 	initialSort: [{
@@ -267,10 +270,16 @@ var table = new Tabulator("#table", {
 	]
 });
 
-table.setData(result);
+table.setData(result).then(() => {
+	// console.log(table.getColumnLayout());
+	
+	
+})
+.catch((err) => {
+console.log("err", err);
+});
 
 table.redraw(true);
-
 // Update cells
 function updateData(celldata) {
 
@@ -311,31 +320,7 @@ function addEmptyRow() {
 		}).then(res => res.json())
 		.then(response => {
 			table.addRow({
-				serial: response.insertId,
-				address_town: '',
-				address_city: '',
-				address_state: '',
-				address_country: '',
-				website: '',
-				cluster: '',
-				hq: '',
-				hq_country: '',
-				store_common_name: '',
-				store_full_name: '',
-				brand: '',
-				category_1: '',
-				category_2: '',
-				category_3: '',
-				category_4: '',
-				category_5: '',
-				brand_website: '',
-				brandhq_address_town: '',
-				brandhq_address_city: '',
-				brandhq_address_state: '',
-				brandhq_address_country: '',
-				floor: '',
-				distribution: '',
-				area: ''
+				serial: response.insertId
 			}, true);
 			table.redraw(true);
 		})
@@ -455,8 +440,8 @@ $(document).ready(function () {
 
 		// Column 3 Dropdown
 		$('#colsvalues').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
-			// var selected = $(this).find('option').eq(clickedIndex).text();
-
+			var selected = $(this).find('option').eq(clickedIndex).text();
+			
 	
 			if(newValue){
 				
@@ -468,7 +453,7 @@ $(document).ready(function () {
 					
 				// 	}
 				// );
-
+				
 				
 				
 				}
@@ -503,6 +488,7 @@ $(document).ready(function () {
 		var selected = $("#colsvalues").val();
 		console.log("selected: ", selected);
 		selectedopts["col3"] = selected;
+
 
 		
 		fetch('/list', {

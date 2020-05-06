@@ -41,11 +41,6 @@ module.exports = function(app)
 
     app.get('/login', (req,res) => {
         console.log(req.user);
-        // if(req.user){
-        // res.render('pages/success.ejs', {data: {connection: req.user, logout: false}});
-        // } else {
-        // res.render('pages/login.ejs', {data:{logout: true}});
-        // }
         res.redirect('/');
     });
 
@@ -69,7 +64,6 @@ module.exports = function(app)
 
 
     app.get('/list', authcontroller.validate, (req, res) => {
-       
         conn.connection.query(`SELECT * FROM ${process.env.DB_NAME}.${process.env.DB_TABLE} LIMIT 10`, (error, results, fields) => {
             if (error) throw error;
             
@@ -129,20 +123,23 @@ module.exports = function(app)
     });
     
     app.get('/list/filter', (req,res) => {
-
         if(req.query.limitnum > '0'){
             req.session.limitnum = req.query.limitnum
                  conn.connection.query(`select * from malls.mallslatest limit ${req.query.limitnum}`, (error, results, fields) => {
                 if (error) throw error;
-
                 var cipher = encryptdata.encryptdata(results);
                 res.render('pages/list.ejs', {data: {results: cipher}});  
             });
-        } else {
+        } else if (req.query.limitnum == '') {
+            req.session.limitnum = req.query.limitnum
+                 conn.connection.query(`select * from malls.mallslatest`, (error, results, fields) => {
+                if (error) throw error;
+                var cipher = encryptdata.encryptdata(results);
+                res.render('pages/list.ejs', {data: {results: cipher}});  
+            });
+        }else {
             res.render('pages/list.ejs', {data: {results: req.session.qres}}); 
-        }
-
-         
+        }    
     }); 
 }
 
