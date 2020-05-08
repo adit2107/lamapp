@@ -42,9 +42,6 @@ thead input {
   width: 100%;
 }
 
-form {
-  margin-top: 25px;
-}
 
 .jumbotron {
   margin-top: 50px;
@@ -227,6 +224,14 @@ flex-direction: column;
 
 .dropdown {
   padding-right: 5px;
+}
+
+.form-group {
+  margin-bottom: 0px;
+}
+
+.inforeset {
+  padding-top: 5px;
 }
 
 

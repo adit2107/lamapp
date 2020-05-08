@@ -56,18 +56,15 @@ exports.generateQuery = (queryparams, res) => {
                 }
             }   
         }
-        console.log("TEST ME");
-        console.log(queryparams.body);
+       
         // var kq = knex.select(kjson.col1).from(`${process.env.DB_NAME}.${process.env.DB_TABLE}`).toSQL().toNative();
 
         let results = async function getRows () {
+            kjson.col1.unshift('serial');
             return await knex(`${process.env.DB_NAME}.${process.env.DB_TABLE}`)
         .where((builder) => {
             for (var item in kjson["col2"]){
                 builder.whereIn(item, kjson["col2"][item])
-                console.log(item);
-                console.log(kjson["col2"][item]);
-                 
             }
             
         }
@@ -76,8 +73,6 @@ exports.generateQuery = (queryparams, res) => {
     }
 
     results().then((valss) => {
-        console.log("Got");
-        console.log(valss);
         var cipher = encryptdata.encryptdata(valss);
         queryparams.session.qres = cipher;
         res.redirect('/list/filter');

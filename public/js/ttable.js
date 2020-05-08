@@ -32,6 +32,12 @@ var table = new Tabulator("#table", {
 		column: "name",
 		dir: "asc"
 	}, ],
+	downloadConfig:{
+        columnGroups: true, //include column groups in column headers for download
+        rowGroups:false, //do not include row groups in download
+        columnCalcs:false, //do not include column calculation rows in download
+        dataTree:false, //do not include data tree in download
+    },
 	index: "serial",
 	dataLoaded: function (data) {
 		var visiblecols = Object.keys(data[0]);
@@ -353,8 +359,8 @@ $(document).ready(function () {
 	});
 
 	// Download CSV
-	document.getElementById("download-csv").addEventListener("click", function () {
-		table.download("csv", "POIData.csv");
+	document.getElementById("download").addEventListener("click", function () {
+		table.download("xlsx", "POIData.xlsx", {sheetName: "FilteredData"});
 	});
 
 	// reset modal
