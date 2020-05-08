@@ -489,8 +489,6 @@ $(document).ready(function () {
 		console.log("selected: ", selected);
 		selectedopts["col3"] = selected;
 
-
-		
 		fetch('/list', {
 				method: 'POST',
 				body: JSON.stringify(selectedopts),
@@ -502,15 +500,7 @@ $(document).ready(function () {
 				//console.log('Success:', JSON.stringify(response));
 				window.location='/list/filter';
 			})
-			.catch(error => console.error('Error:', error));
-
-			
-			selectedopts.col1.splice(0, );
-			selectedopts["col2"] = {};
-			$("#colsvalues").html('').selectpicker('refresh');
-			$('.selectpick').selectpicker('destroy');
-
-			
+			.catch(error => console.error('Error:', error));		
 
 	});
 

@@ -27,7 +27,7 @@ exports.generateQuery = (queryparams) => {
         col2: queryparams["col2"]
     }
    
-    
+    // Retrieving values for column names
     if(queryparams.hasOwnProperty('colname')){
         console.log("COLUMN QUERY");
         console.log(queryparams);
@@ -43,6 +43,7 @@ exports.generateQuery = (queryparams) => {
         return result;
     }
 
+    // Submitting columns for filtering
     if(queryparams.hasOwnProperty('col1') && queryparams.hasOwnProperty('col2')){
         console.log("SUBMIT QUERY");
         console.log(queryparams);
