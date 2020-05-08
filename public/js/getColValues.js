@@ -123,12 +123,6 @@ function columnVals(colname, newclick, selectedopts, selectedcolvals) {
 	}
 
 	if(!newclick){
-			// if(selectedopts.col2.hasOwnProperty(colname)){
-			// 	$("#colsvalues").children().remove(`optgroup[label="${colname}"]`);
-			// 	$('#colsvalues').selectpicker('refresh');
-			// 	delete selectedopts.col2[colname];
-	
-			// }
 
 			fetch('/search', {
 				method: 'POST',
