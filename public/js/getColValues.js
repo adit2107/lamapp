@@ -1,6 +1,5 @@
 import selectedopts from './selectedopts.js'
 
-
 function retColValues (colname, newclick, selectedopts, selectedcolvals) {
 
 	switch (colname) {
@@ -124,12 +123,32 @@ function columnVals(colname, newclick, selectedopts, selectedcolvals) {
 	}
 
 	if(!newclick){
-			if(selectedopts.col2.hasOwnProperty(colname)){
+			// if(selectedopts.col2.hasOwnProperty(colname)){
+			// 	$("#colsvalues").children().remove(`optgroup[label="${colname}"]`);
+			// 	$('#colsvalues').selectpicker('refresh');
+			// 	delete selectedopts.col2[colname];
+	
+			// }
+
+			fetch('/search', {
+				method: 'POST',
+				body: JSON.stringify({
+					colname
+				}),
+				headers: {
+					'Content-Type': 'application/json'
+				}
+			}).then(res => res.json())
+			.then(response => {
+				
+				let coldbname = response.column;
 				$("#colsvalues").children().remove(`optgroup[label="${colname}"]`);
 				$('#colsvalues').selectpicker('refresh');
-				delete selectedopts.col2[colname];
+				delete selectedopts.col2[coldbname];
+				
 	
-			}
+			})
+			.catch(error => console.error('Error:', error));
 		
 		}
 }

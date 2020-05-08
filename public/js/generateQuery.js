@@ -1,4 +1,5 @@
-let coljson = require('../files/fieldmap.json');
+encryptdata = require('./encryptdata');
+const coljson = require('../files/fieldmap.json');
 
 var knex = require('knex')({
     client: 'mysql',
@@ -12,9 +13,6 @@ var knex = require('knex')({
 
 exports.generateQuery = (queryparams, res) => {
 
-    console.log("QUERY");
-    console.log(queryparams);
-
 
     var values = [];
     
@@ -25,13 +23,8 @@ exports.generateQuery = (queryparams, res) => {
         values: values
     };
 
-    var kjson = {
-        col1: queryparams.col1,
-        col2: queryparams["col2"]
-    }
+    
 
-
-   
     // Retrieving 3rd col values for 2nd column names
     if(queryparams.hasOwnProperty('colname')){
         console.log("COLUMN QUERY");
@@ -49,10 +42,13 @@ exports.generateQuery = (queryparams, res) => {
     }
 
     // Submitting columns for filtering
-    if(queryparams.hasOwnProperty('col1') && queryparams.hasOwnProperty('col2')){
-        console.log("SUBMIT QUERY");
-        console.log(queryparams);
-        
+    if(queryparams.body.hasOwnProperty('col1') && queryparams.body.hasOwnProperty('col2')){
+
+        var kjson = {
+            col1: queryparams.body.col1,
+            col2: queryparams.body["col2"]
+        }
+
         for (realval in coljson){
            for(var [index, value] of kjson.col1.entries()){
                 if(value == realval) {
@@ -60,23 +56,32 @@ exports.generateQuery = (queryparams, res) => {
                 }
             }   
         }
-
-
+        console.log("TEST ME");
+        console.log(queryparams.body);
         // var kq = knex.select(kjson.col1).from(`${process.env.DB_NAME}.${process.env.DB_TABLE}`).toSQL().toNative();
 
-        knex(`${process.env.DB_NAME}.${process.env.DB_TABLE}`)
-        .where((builder) => 
-            // for (var item in kjson["col2"]){
-            //     console.log("Inside query build", item);
-                
-            // }
-            builder.whereIn('mallname', [1, 2, 3])
+        let results = async function getRows () {
+            return await knex(`${process.env.DB_NAME}.${process.env.DB_TABLE}`)
+        .where((builder) => {
+            for (var item in kjson["col2"]){
+                builder.whereIn(item, kjson["col2"][item])
+                console.log(item);
+                console.log(kjson["col2"][item]);
+                 
+            }
+            
+        }
         )
         .select(kjson.col1)
-        .toSQL()
-        .toNative();
+    }
 
-    
-        
+    results().then((valss) => {
+        console.log("Got");
+        console.log(valss);
+        var cipher = encryptdata.encryptdata(valss);
+        queryparams.session.qres = cipher;
+        res.redirect('/list/filter');
+    });
+ 
     }
 }
