@@ -10,7 +10,10 @@ var knex = require('knex')({
     }
   });
 
-exports.generateQuery = (queryparams) => {
+exports.generateQuery = (queryparams, res) => {
+
+    console.log("QUERY");
+    console.log(queryparams);
 
 
     var values = [];
@@ -26,8 +29,10 @@ exports.generateQuery = (queryparams) => {
         col1: queryparams.col1,
         col2: queryparams["col2"]
     }
+
+
    
-    // Retrieving values for column names
+    // Retrieving 3rd col values for 2nd column names
     if(queryparams.hasOwnProperty('colname')){
         console.log("COLUMN QUERY");
         console.log(queryparams);
@@ -55,8 +60,23 @@ exports.generateQuery = (queryparams) => {
                 }
             }   
         }
+
+
+        // var kq = knex.select(kjson.col1).from(`${process.env.DB_NAME}.${process.env.DB_TABLE}`).toSQL().toNative();
+
+        knex(`${process.env.DB_NAME}.${process.env.DB_TABLE}`)
+        .where((builder) => 
+            // for (var item in kjson["col2"]){
+            //     console.log("Inside query build", item);
+                
+            // }
+            builder.whereIn('mallname', [1, 2, 3])
+        )
+        .select(kjson.col1)
+        .toSQL()
+        .toNative();
+
+    
         
-        var kq = knex.select(kjson.col1).from(`${process.env.DB_NAME}.${process.env.DB_TABLE}`).toSQL().toNative();
-        return kq.sql;
     }
 }

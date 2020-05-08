@@ -84,7 +84,7 @@ function columnVals(colname, newclick, selectedopts, selectedcolvals) {
 	let uarr = [];
 
 	if(newclick){
-		selectedopts["col2"][colname] = [];
+		// selectedopts["col2"][colname] = [];
 		fetch('/search', {
 			method: 'POST',
 			body: JSON.stringify({
@@ -97,9 +97,9 @@ function columnVals(colname, newclick, selectedopts, selectedcolvals) {
 		.then(response => {
 			
 			let coldbname = response.column;
-			for (var col of response.results) {
+			selectedopts["col2"][coldbname] = [];
+			for (var col of response.results) {	
 				uarr.push(col[coldbname]);
-			
 			}
 			
 			selectedcolvals += `<optgroup label="${colname}">`
@@ -107,7 +107,7 @@ function columnVals(colname, newclick, selectedopts, selectedcolvals) {
             
 				for (var vval of resuarr) {
 				
-					selectedcolvals += `<option class="${colname}">${vval}</option>`;
+					selectedcolvals += `<option class="${coldbname}">${vval}</option>`;
 				}
 			
 			$('#colsvalues').append(selectedcolvals);

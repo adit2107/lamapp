@@ -442,9 +442,8 @@ $(document).ready(function () {
 		$('#colsvalues').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
 			var selected = $(this).find('option').eq(clickedIndex).text();
 			
-	
 			if(newValue){
-				
+
 				for(var item in selectedopts.col2){
 				
 
@@ -461,6 +460,7 @@ $(document).ready(function () {
 				
 				
 			} else {
+				
 				// for(var item in selectedopts.col2){
                 
 				// 	[...document.getElementsByClassName(item)].forEach(
@@ -485,9 +485,27 @@ $(document).ready(function () {
 
 	document.getElementById("filtertablebtn").addEventListener("click", function () {
 
-		var selected = $("#colsvalues").val();
-		console.log("selected: ", selected);
-		selectedopts["col3"] = selected;
+		// var selected = $("#colsvalues").val();
+		// console.log("selected: ", selected);
+		// selectedopts["col3"] = selected;
+
+		//console.log(selectedopts);
+
+		for (var colname in selectedopts["col2"]){
+			//console.log(colname);
+
+			var sel = document.querySelectorAll(`a.${colname} > .text`);
+           // console.log("sel", sel)
+		
+			for (var vals of sel.values()){
+				
+				selectedopts["col2"][colname].push(vals.innerText);
+			}
+		}
+
+		//console.log(selectedopts);
+		
+
 
 		fetch('/list', {
 				method: 'POST',
@@ -500,8 +518,12 @@ $(document).ready(function () {
 				//console.log('Success:', JSON.stringify(response));
 				window.location='/list/filter';
 			})
-			.catch(error => console.error('Error:', error));		
-
+			.catch(error => console.error('Error:', error));
+					
+		selectedopts.col1.splice(0, );
+		selectedopts["col2"] = {};
+		$("#colsvalues").html('').selectpicker('refresh');
+		$('.selectpick').selectpicker('destroy');
 	});
 
 	document.getElementById("modal-close").addEventListener("click", function () {

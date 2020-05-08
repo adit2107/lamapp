@@ -111,14 +111,17 @@ module.exports = function(app)
                 res.json(results);
             } );
         } else {
-            var resq = querygenerator.generateQuery(req.body);
             
-            conn.connection.query(resq, (error, results, fields) => {
-                if (error) throw error;
-                var cipher = encryptdata.encryptdata(results);
-                req.session.qres = cipher;
-                res.redirect('/list/filter');
-            });
+            var resq = querygenerator.generateQuery(req, res);
+            console.log("Returend");
+            console.log(resq);
+            
+            // conn.connection.query(resq, (error, results, fields) => {
+            //     if (error) throw error;
+            //     var cipher = encryptdata.encryptdata(results);
+            //     req.session.qres = cipher;
+            //     res.redirect('/list/filter');
+            // });
         }  
     });
     
