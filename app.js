@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const express = require('express');
 var fs = require('fs');
-var https = require('https')
+var https = require('https');
 const app = express();
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
