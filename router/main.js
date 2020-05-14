@@ -53,7 +53,7 @@ module.exports = function(app)
      });
 
     app.get('/userlogout', (req,res) => {
-        res.redirect(`https://mallapp21.auth.us-east-1.amazoncognito.com/logout?client_id=7j5upal5ol8dh05qbpn2n1hbk8&logout_uri=http://localhost:3030/logout`);
+        res.redirect(`https://${process.env.cog_client_name}.auth.${process.env.cog_region}.amazoncognito.com/logout?client_id=${process.env.cog_client_id}&logout_uri=${process.env.logouturi}`);
     });
 
     app.get('/logout', (req,res) => {
@@ -119,14 +119,14 @@ module.exports = function(app)
     app.get('/list/filter', (req,res) => {
         if(req.query.limitnum > '0'){
             req.session.limitnum = req.query.limitnum
-                 conn.connection.query(`select * from malls.mallslatest limit ${req.query.limitnum}`, (error, results, fields) => {
+                 conn.connection.query(`select * from ${process.env.DB_NAME}.${process.env.DB_TABLE} limit ${req.query.limitnum}`, (error, results, fields) => {
                 if (error) throw error;
                 var cipher = encryptdata.encryptdata(results);
                 res.render('pages/list.ejs', {data: {results: cipher}});  
             });
         } else if (req.query.limitnum == '') {
             req.session.limitnum = req.query.limitnum
-                 conn.connection.query(`select * from malls.mallslatest`, (error, results, fields) => {
+                 conn.connection.query(`select * from ${process.env.DB_NAME}.${process.env.DB_TABLE}`, (error, results, fields) => {
                 if (error) throw error;
                 var cipher = encryptdata.encryptdata(results);
                 res.render('pages/list.ejs', {data: {results: cipher}});  

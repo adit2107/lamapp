@@ -1,14 +1,14 @@
 require('dotenv').config()
 
 const express = require('express');
+var fs = require('fs');
+var https = require('https')
 const app = express();
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
 CognitoExpress = require("cognito-express")
 authenticatedRoute = express.Router()
-
-require('dotenv').config()
 
 require('./router/main')(app);
 
@@ -46,9 +46,12 @@ const connection = mysql.createConnection({
     }
 });
   
-
-const server = app.listen(process.env.PORT, () => {
-    console.log(`Server running on: ${process.env.PORT}`);
-})
+https.createServer({
+  key: fs.readFileSync('server.key'),
+  cert: fs.readFileSync('server.cert')
+}, app)
+.listen(process.env.PORT, () => {
+  console.log(`Server running on: ${process.env.PORT}`);
+});
 
 exports.connection = connection;
