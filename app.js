@@ -7,6 +7,7 @@ const app = express();
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
+var port = process.env.PORT || 3030;
 CognitoExpress = require("cognito-express")
 authenticatedRoute = express.Router()
 
@@ -57,11 +58,12 @@ const connection = mysql.createConnection({
     }
 });
   
-https.createServer({
-key: fs.readFileSync('server.key'),
-cert: fs.readFileSync('server.cert')
-}, app).listen(process.env.PORT, () => {
-  console.log(`Server running on: ${process.env.PORT}`);
+// https.createServer({
+// key: fs.readFileSync('server.key'),
+// cert: fs.readFileSync('server.cert')
+// }, 
+app.listen(port, () => {
+  console.log(`Server running on: ${port}`);
 });
 
 exports.connection = connection;
