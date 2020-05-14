@@ -11,6 +11,17 @@ CognitoExpress = require("cognito-express")
 authenticatedRoute = express.Router()
 
 require('./router/main')(app);
+function forceHttps(req, res, next){
+    const xfp =
+      req.headers["X-Forwarded-Proto"] || req.headers["x-forwarded-proto"];
+    if (xfp === "http") {
+      res.redirect(301, `https://${req.hostname}${req.url}`);
+    } else {
+      next();
+    }
+ }
+
+app.use(forceHttps);
 
 // setting view engine
 app.set('views',__dirname + '/views');
@@ -47,10 +58,9 @@ const connection = mysql.createConnection({
 });
   
 https.createServer({
-  key: fs.readFileSync('server.key'),
-  cert: fs.readFileSync('server.cert')
-}, app)
-.listen(process.env.PORT, () => {
+key: fs.readFileSync('server.key'),
+cert: fs.readFileSync('server.cert')
+}, app).listen(process.env.PORT, () => {
   console.log(`Server running on: ${process.env.PORT}`);
 });
 
