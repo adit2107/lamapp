@@ -74,7 +74,7 @@ module.exports = function(app)
 
     app.put('/list', (req, res) => {
         
-        conn.connection.query('UPDATE ' + process.env.DB_NAME +'.'+ process.env.DB_TABLE + 'SET ' + conn.connection.escapeId(req.body.columnName) + ' = ' +conn.connection.escape(req.body.newValue) +' WHERE ' + conn.connection.escapeId(req.body.columnName) +' = ' + conn.connection.escape(req.body.oldValue) +' AND serial = ' + conn.connection.escape(req.body.cellId) + '', (error, results, fields) => {
+        conn.connection.query('UPDATE ' + process.env.DB_NAME +'.'+ process.env.DB_TABLE + ' SET ' + conn.connection.escapeId(req.body.columnName) + ' = ' +conn.connection.escape(req.body.newValue) +' WHERE ' + conn.connection.escapeId(req.body.columnName) +' = ' + conn.connection.escape(req.body.oldValue) +' AND serial = ' + conn.connection.escape(req.body.cellId) + '', (error, results, fields) => {
             if (error) throw error;
             res.send("Updated cell");
         });
@@ -83,7 +83,7 @@ module.exports = function(app)
 
     app.delete('/list', (req,res) => {
         var data = [req.body];
-        conn.connection.query('DELETE FROM' + process.env.DB_NAME +'.'+ process.env.DB_TABLE + 'WHERE serial IN (' + data +')', (error, results, fields) => {
+        conn.connection.query('DELETE FROM ' + process.env.DB_NAME +'.'+ process.env.DB_TABLE + ' WHERE serial IN (' + data +')', (error, results, fields) => {
             if (error) throw error;
             console.log(results);
             res.send("Deleted rows");
