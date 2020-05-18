@@ -21,7 +21,6 @@
     "HQ Address - City": "brandhq_address_city",
     "HQ Address - State": "brandhq_address_state",
     "HQ Address - Country": "brandhq_address_country",
-    "HQ Address - Town": "brandhq_address_town",
     "Floor": "floor",
     "Distribution": "distribution",
     "Area (SQ.FT in Mil)": "area"  

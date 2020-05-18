@@ -4,6 +4,7 @@ const flash = require('express-flash');
 const session = require('express-session');
 const cookieParser = require('cookie-parser')
 const fetch = require('node-fetch');
+const morgan = require('morgan');
 
 
 // Important stuff
@@ -14,7 +15,8 @@ encryptdata = require('../public/js/encryptdata');
 
 module.exports = function(app)
 {
-   
+    app.use(morgan('dev'));
+
     app.use(bodyParser.json() );   
 
     app.use(session({
