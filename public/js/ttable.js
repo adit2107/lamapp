@@ -7,36 +7,23 @@ document.getElementById("results").remove();
 var bytes = CryptoJS.AES.decrypt(cipherresult, 'poi212');
 var result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 
-var editparams = {
-  values: true,
-  freetext: true,
-  allowEmpty: false,
-  verticalNavigation: "hybrid",
-};
-
 var rowindices = [];
 
 var table = new Tabulator("#table", {
 	layout: "fitData",
-	// persistence:{
-	// 	columns: true
-	// },
-	// persistenceMode: "cookie",
 	addRowPos: "top",
 	pagination: "local",
 	paginationSize: 10,
 	paginationSizeSelector:[5, 10, 15, 20, 25],
-	resizableRows: true,
-	movableRows: true,
 	initialSort: [{
 		column: "name",
 		dir: "asc"
 	}, ],
 	downloadConfig:{
-        columnGroups: true, //include column groups in column headers for download
-        rowGroups:false, //do not include row groups in download
-        columnCalcs:false, //do not include column calculation rows in download
-        dataTree:false, //do not include data tree in download
+        columnGroups: true, 
+        rowGroups:false, 
+        columnCalcs:false, 
+        dataTree:false, 
     },
 	index: "serial",
 	dataLoaded: function (data) {
@@ -86,7 +73,33 @@ var table = new Tabulator("#table", {
 			title: "Mall Name",
 			field: "mallname",
 			editor: "autocomplete",
-			editorParams: editparams,
+			editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					
+					var colname = "Mall Name";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					console.log(uniquearr);
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+					console.log(retvalues);
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 			visible: false
 		},
 		{
@@ -95,28 +108,120 @@ var table = new Tabulator("#table", {
 					title: "Town",
 					field: "address_town",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Google Address - Town";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				},
 				{
 					title: "City",
 					field: "address_city",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Google Address - City";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				},
 				{
 					title: "State",
 					field: "address_state",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Google Address - State";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				},
 				{
 					title: "Country",
 					field: "address_country",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Google Address - Country";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				}
 			]
@@ -125,7 +230,30 @@ var table = new Tabulator("#table", {
 			title: "Mall Website",
 			field: "website",
 			editor: "autocomplete",
-			editorParams: editparams,
+			editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Mall Website";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 			visible: false
 		},
 		{
@@ -133,21 +261,88 @@ var table = new Tabulator("#table", {
 			field: "cluster",
 			editor: "select",
 			editor: "autocomplete",
-			editorParams: editparams,
+			editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Cluster (Geography)";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 			visible: false
 		},
 		{
 			title: "Headquarters",
 			field: "hq",
 			editor: "autocomplete",
-			editorParams: editparams,
+			editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Headquarters";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 			visible: false
 		},
 		{
 			title: "Country Zone",
 			field: "hq_country",
 			editor: "autocomplete",
-			editorParams: editparams,
+			editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Country Zone";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 			visible: false
 		},
 		{
@@ -156,14 +351,56 @@ var table = new Tabulator("#table", {
 					title: "Common Name",
 					field: "store_common_name",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				values: true,
+				searchFunc: async function(term, values){
+					var colname = "Store - Common Name";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				},
 				{
 					title: "Full Name",
 					field: "store_full_name",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Store - Full Name";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				}
 			]
@@ -172,7 +409,30 @@ var table = new Tabulator("#table", {
 			title: "Brand - Single/Multi",
 			field: "brand",
 			editor: "autocomplete",
-			editorParams: editparams,
+			editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Brand - Single/Multi";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 			visible: false
 		},
 		{
@@ -181,34 +441,149 @@ var table = new Tabulator("#table", {
 					title: "1",
 					field: "category_1",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Category - 1";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				},
 				{
 					title: "2",
 					field: "category_2",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Category - 2";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				},
 				{
 					title: "3",
 					field: "category_3",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Category - 3";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				},
 				{
 					title: "4",
 					field: "category_4",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Category - 4";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				}, {
 					title: "5",
 					field: "category_5",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Category - 5";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				}
 			]
@@ -217,7 +592,30 @@ var table = new Tabulator("#table", {
 			title: "Brand Website",
 			field: "brand_website",
 			editor: "autocomplete",
-			editorParams: editparams,
+			editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Brand Website";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 			visible: false
 		},
 		{
@@ -226,28 +624,120 @@ var table = new Tabulator("#table", {
 					title: "Town",
 					field: "brandhq_address_town",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "HQ Address - Town";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				},
 				{
 					title: "City",
 					field: "brandhq_address_city",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "HQ Address - City";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				},
 				{
 					title: "State",
 					field: "brandhq_address_state",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "HQ Address - State";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				},
 				{
 					title: "Country",
 					field: "brandhq_address_country",
 					editor: "autocomplete",
-					editorParams: editparams,
+					editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "HQ Address - Country";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 					visible: false
 				}
 			]
@@ -256,14 +746,60 @@ var table = new Tabulator("#table", {
 			title: "Floor",
 			field: "floor",
 			editor: "autocomplete",
-			editorParams: editparams,
+			editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Floor";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 			visible: false
 		},
 		{
 			title: "Distribution",
 			field: "distribution",
 			editor: "autocomplete",
-			editorParams: editparams,
+			editorParams: {
+				displayAllSearchResults: true,
+				emptyPlaceholder:"(No matching results found)",
+				values: {},
+				searchFunc: async function(term, values){
+					var colname = "Distribution";
+					var response = await fetch('/search', { method: 'POST',
+					body: JSON.stringify({
+						colname
+					}),
+					headers: {
+						'Content-Type': 'application/json'
+					}});
+					var body = await response.json();
+					let uniquearr = [...new Set(body.results.map(item => item[body.column]))];
+					let retvalues = uniquearr.filter(x => x.toLowerCase().includes(term.toLowerCase()));
+
+					
+					return retvalues;
+				},
+				freetext: true,
+				allowEmpty: false,
+				verticalNavigation: "hybrid",
+			},
 			visible: false
 		},
 		{
@@ -277,9 +813,7 @@ var table = new Tabulator("#table", {
 });
 
 table.setData(result).then(() => {
-	// console.log(table.getColumnLayout());
-	
-	
+		
 })
 .catch((err) => {
 console.log("err", err);
@@ -325,8 +859,35 @@ function addEmptyRow() {
 			headers: {}
 		}).then(res => res.json())
 		.then(response => {
+			var colDefs = table.getColumnDefinitions();
 			table.addRow({
-				serial: response.insertId
+				serial: response.insertId,
+				mallname: '',
+				address_town: '',
+				address_city: '',
+				address_state: '',
+				address_country: '',
+				website: '',
+				cluster: '',
+				hq: '',
+				hq_country: '',
+				store_common_name: '',
+				store_full_name: '',
+				brand: '',
+				category_1: '',
+				category_2: '',
+				category_3: '',
+				category_4: '',
+				category_5: '',
+				brand_website: '',
+				brandhq_address_town: '',
+				brandhq_address_city: '',
+				brandhq_address_state: '',
+				brandhq_address_country: '',
+				floor: '',
+				distribution: '',
+				area: ''  
+
 			}, true);
 			table.redraw(true);
 		})
@@ -447,37 +1008,7 @@ $(document).ready(function () {
 		// Column 3 Dropdown
 		$('#colsvalues').on('changed.bs.select', function (e, clickedIndex, newValue, oldValue) {
 			var selected = $(this).find('option').eq(clickedIndex).text();
-			
-			// if(newValue){
-
-			// 	for(var item in selectedopts.col2){
-				
-
-			// 	// [...document.getElementsByClassName(item)].forEach(
-			// 	// 	(element, index, array) => {
-					
-			// 	// 	}
-			// 	// );
-				
-				
-				
-			// 	}
-
-				
-				
-			// } else {
-				
-			// 	// for(var item in selectedopts.col2){
-                
-			// 	// 	[...document.getElementsByClassName(item)].forEach(
-			// 	// 		(element, index, array) => {
-							
-			// 	// 		}
-			// 	// 	);
-					
-			// 	// 	}
-				
-			// }
+	
 		});
 
 		$('#selectcols1').html(selectcolopts);
@@ -494,10 +1025,8 @@ $(document).ready(function () {
 	
 
 		for (var colname in selectedopts["col2"]){
-			//console.log(colname);
 
 			var sel = document.querySelectorAll(`a.${colname}.selected > .text`);
-           // console.log("sel", sel)
 		
 			for (var vals of sel.values()){
 				
@@ -514,7 +1043,6 @@ $(document).ready(function () {
 				}
 			}).then(res => res.text())
 			.then(response => {
-				//console.log('Success:', JSON.stringify(response));
 				window.location='/list/filter';
 			})
 			.catch(error => console.error('Error:', error));

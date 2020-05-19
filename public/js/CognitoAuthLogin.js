@@ -16,7 +16,6 @@ fetch(`https://${process.env.cog_client_name}.auth.${process.env.cog_region}.ama
 })
 .then(res => res.json())
 .then(response => {
-
     fetch(`https://${process.env.cog_client_name}.auth.${process.env.cog_region}.amazoncognito.com/oauth2/userInfo`, {
         method: 'GET',
         headers: {

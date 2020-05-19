@@ -75,9 +75,10 @@ module.exports = function(app)
     });
 
     app.put('/list', (req, res) => {
-        
+        console.log(req.body);
         conn.connection.query('UPDATE ' + process.env.DB_NAME +'.'+ process.env.DB_TABLE + ' SET ' + conn.connection.escapeId(req.body.columnName) + ' = ' +conn.connection.escape(req.body.newValue) +' WHERE ' + conn.connection.escapeId(req.body.columnName) +' = ' + conn.connection.escape(req.body.oldValue) +' AND serial = ' + conn.connection.escape(req.body.cellId) + '', (error, results, fields) => {
             if (error) throw error;
+            console.log(results);
             res.send("Updated cell");
         });
        
@@ -110,6 +111,7 @@ module.exports = function(app)
         if (Object.keys(req.body).length === 0 ) {
             conn.connection.query(`INSERT INTO ${process.env.DB_NAME}.${process.env.DB_TABLE} () VALUES ()`, (error, results, fields) => {
                 if (error) throw error;
+                console.log(results);
                 res.json(results);
             } );
         } else {
