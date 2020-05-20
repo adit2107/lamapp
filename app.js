@@ -7,10 +7,12 @@ const app = express();
 const mysql = require('mysql');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
+const compression = require('compression');
 var port = process.env.PORT || 3030;
 CognitoExpress = require("cognito-express")
 authenticatedRoute = express.Router()
 
+app.use(compression({level: 9}));
 require('./router/main')(app);
 function forceHttps(req, res, next){
     const xfp =

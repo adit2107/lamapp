@@ -88,11 +88,6 @@
         "defer-to-connect": "^1.0.1"
       }
     },
-    "@tarekraafat/autocomplete.js": {
-      "version": "7.2.0",
-      "resolved": "https://registry.npmjs.org/@tarekraafat/autocomplete.js/-/autocomplete.js-7.2.0.tgz",
-      "integrity": "sha1-1qyf5425LYZOwJZjnld/fksyOCk="
-    },
     "@types/color-name": {
       "version": "1.1.1",
       "resolved": "https://registry.npmjs.org/@types/color-name/-/color-name-1.1.1.tgz",
@@ -133,23 +128,6 @@
       "version": "7.1.1",
       "resolved": "https://registry.npmjs.org/acorn-walk/-/acorn-walk-7.1.1.tgz",
       "integrity": "sha1-NF8N/61cc15zc9L+yaECPmpEuD4="
-    },
-    "amazon-cognito-identity-js": {
-      "version": "4.2.1",
-      "resolved": "https://registry.npmjs.org/amazon-cognito-identity-js/-/amazon-cognito-identity-js-4.2.1.tgz",
-      "integrity": "sha1-hgZxK0x6o382AmW6TYSyKl2c1kw=",
-      "requires": {
-        "buffer": "4.9.1",
-        "crypto-js": "^3.3.0",
-        "js-cookie": "^2.1.4"
-      },
-      "dependencies": {
-        "crypto-js": {
-          "version": "3.3.0",
-          "resolved": "https://registry.npmjs.org/crypto-js/-/crypto-js-3.3.0.tgz",
-          "integrity": "sha512-DIT51nX0dCfKltpRiXV+/TVZq+Qq2NgF4644+K7Ttnla7zEzqc+kjJyiB96BHNyUTBxyjzRcZYpUdZa+QAqi6Q=="
-        }
-      }
     },
     "ansi-styles": {
       "version": "3.2.1",
@@ -340,11 +318,6 @@
         }
       }
     },
-    "base64-js": {
-      "version": "1.3.1",
-      "resolved": "https://registry.npmjs.org/base64-js/-/base64-js-1.3.1.tgz",
-      "integrity": "sha1-WOzoy3XdB+ce0IxzarxfrE2/jfE="
-    },
     "basic-auth": {
       "version": "2.0.1",
       "resolved": "https://registry.npmjs.org/basic-auth/-/basic-auth-2.0.1.tgz",
@@ -495,16 +468,6 @@
       "version": "1.1.0",
       "resolved": "https://registry.npmjs.org/brorand/-/brorand-1.1.0.tgz",
       "integrity": "sha1-EsJe/kCkXjwyPrhnWgoM5XsiNx8="
-    },
-    "buffer": {
-      "version": "4.9.1",
-      "resolved": "https://registry.npmjs.org/buffer/-/buffer-4.9.1.tgz",
-      "integrity": "sha1-bRu2AbB6TvztlwlBMgkwJ8lbwpg=",
-      "requires": {
-        "base64-js": "^1.0.2",
-        "ieee754": "^1.1.4",
-        "isarray": "^1.0.0"
-      }
     },
     "buffer-equal-constant-time": {
       "version": "1.0.1",
@@ -748,6 +711,35 @@
       "version": "1.3.0",
       "resolved": "https://registry.npmjs.org/component-emitter/-/component-emitter-1.3.0.tgz",
       "integrity": "sha512-Rd3se6QB+sO1TwqZjscQrurpEPIfO0/yYnSin6Q/rD3mOutHvUrCAhJub3r90uNb+SESBuE0QYoB90YdfatsRg=="
+    },
+    "compressible": {
+      "version": "2.0.18",
+      "resolved": "https://registry.npmjs.org/compressible/-/compressible-2.0.18.tgz",
+      "integrity": "sha512-AF3r7P5dWxL8MxyITRMlORQNaOA2IkAFaTr4k7BUumjPtRpGDTZpl0Pb1XCO6JeDCBdp126Cgs9sMxqSjgYyRg==",
+      "requires": {
+        "mime-db": ">= 1.43.0 < 2"
+      }
+    },
+    "compression": {
+      "version": "1.7.4",
+      "resolved": "https://registry.npmjs.org/compression/-/compression-1.7.4.tgz",
+      "integrity": "sha512-jaSIDzP9pZVS4ZfQ+TzvtiWhdpFhE2RDHz8QJkpX9SIpLq88VueF5jJw6t+6CUQcAoA6t+x89MLrWAqpfDE8iQ==",
+      "requires": {
+        "accepts": "~1.3.5",
+        "bytes": "3.0.0",
+        "compressible": "~2.0.16",
+        "debug": "2.6.9",
+        "on-headers": "~1.0.2",
+        "safe-buffer": "5.1.2",
+        "vary": "~1.1.2"
+      },
+      "dependencies": {
+        "bytes": {
+          "version": "3.0.0",
+          "resolved": "https://registry.npmjs.org/bytes/-/bytes-3.0.0.tgz",
+          "integrity": "sha1-0ygVQE1olpn4Wk6k+odV3ROpYEg="
+        }
+      }
     },
     "concat-map": {
       "version": "0.0.1",
@@ -2055,11 +2047,6 @@
         "safer-buffer": ">= 2.1.2 < 3"
       }
     },
-    "ieee754": {
-      "version": "1.1.13",
-      "resolved": "https://registry.npmjs.org/ieee754/-/ieee754-1.1.13.tgz",
-      "integrity": "sha1-7BaFWOlaoYH9h9N/VcMrvLZwi4Q="
-    },
     "ignore": {
       "version": "5.1.4",
       "resolved": "https://registry.npmjs.org/ignore/-/ignore-5.1.4.tgz",
@@ -2387,11 +2374,6 @@
       "version": "3.5.0",
       "resolved": "https://registry.npmjs.org/jquery/-/jquery-3.5.0.tgz",
       "integrity": "sha1-mYC5fZ5BlGEcNlMOfcRqWNc0D8k="
-    },
-    "js-cookie": {
-      "version": "2.2.1",
-      "resolved": "https://registry.npmjs.org/js-cookie/-/js-cookie-2.2.1.tgz",
-      "integrity": "sha1-aeEG3F1YBolFYpAqpbrsN0Tpsrg="
     },
     "js-tokens": {
       "version": "4.0.0",
