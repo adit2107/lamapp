@@ -27,10 +27,13 @@ var table = new Tabulator("#table", {
     },
 	index: "serial",
 	dataLoaded: function (data) {
-		var visiblecols = Object.keys(data[0]);
+		if(data[0] != undefined){
+			var visiblecols = Object.keys(data[0]);
 		visiblecols.forEach(item => {
 			table.showColumn(item);
-		})
+		});
+		}
+		
 	},
 	cellEdited: function (cell) {
 
