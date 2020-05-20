@@ -4,7 +4,7 @@ const express = require('express');
 var fs = require('fs');
 var https = require('https');
 const app = express();
-const mysql = require('mysql');
+const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const compression = require('compression');
@@ -60,10 +60,6 @@ const connection = mysql.createConnection({
     }
 });
   
-// https.createServer({
-// key: fs.readFileSync('server.key'),
-// cert: fs.readFileSync('server.cert')
-// }, 
 app.listen(port, () => {
   console.log(`Server running on: ${port}`);
 });

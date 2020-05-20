@@ -50,8 +50,8 @@ fetch(`https://cognito-idp.${process.env.cog_region}.amazonaws.com/${process.env
                 
 })
 .catch(err => {
-    console.log("inside error");
-    console.error(err);
+    //console.log("inside error");
+    //console.error(err);
     callback(err, proceed);
 });
 }

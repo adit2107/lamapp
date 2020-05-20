@@ -15,7 +15,9 @@ encryptdata = require('../public/js/encryptdata');
 
 module.exports = function(app)
 {
-    app.use(morgan('dev'));
+    app.use(morgan('dev', {
+        skip: (req, res) => { return res.statusCode < 400}
+    }));
 
     app.use(bodyParser.json() );   
 
@@ -42,7 +44,6 @@ module.exports = function(app)
     });
 
     app.get('/login', (req,res) => {
-        console.log(req.user);
         res.redirect('/');
     });
 
@@ -66,6 +67,7 @@ module.exports = function(app)
 
 
     app.get('/list', authcontroller.validate, (req, res) => {
+        
         conn.connection.query(`SELECT * FROM ${process.env.DB_NAME}.${process.env.DB_TABLE}`, (error, results, fields) => {
             if (error) throw error;
             
@@ -78,7 +80,6 @@ module.exports = function(app)
         console.log(req.body);
         conn.connection.query('UPDATE ' + process.env.DB_NAME +'.'+ process.env.DB_TABLE + ' SET ' + conn.connection.escapeId(req.body.columnName) + ' = ' +conn.connection.escape(req.body.newValue) +' WHERE ' + conn.connection.escapeId(req.body.columnName) +' = ' + conn.connection.escape(req.body.oldValue) +' AND serial = ' + conn.connection.escape(req.body.cellId) + '', (error, results, fields) => {
             if (error) throw error;
-            console.log(results);
             res.send("Updated cell");
         });
        
@@ -88,7 +89,6 @@ module.exports = function(app)
         var data = [req.body];
         conn.connection.query('DELETE FROM ' + process.env.DB_NAME +'.'+ process.env.DB_TABLE + ' WHERE serial IN (' + data +')', (error, results, fields) => {
             if (error) throw error;
-            console.log(results);
             res.send("Deleted rows");
         });
     });
@@ -111,7 +111,7 @@ module.exports = function(app)
         if (Object.keys(req.body).length === 0 ) {
             conn.connection.query(`INSERT INTO ${process.env.DB_NAME}.${process.env.DB_TABLE} () VALUES ()`, (error, results, fields) => {
                 if (error) throw error;
-                console.log(results);
+                
                 res.json(results);
             } );
         } else {
@@ -122,6 +122,7 @@ module.exports = function(app)
     
     app.get('/list/filter', (req,res) => {
         if(req.query.limitnum > '0'){
+            console.log("LIMITING");
             req.session.limitnum = req.query.limitnum
                  conn.connection.query(`select * from ${process.env.DB_NAME}.${process.env.DB_TABLE} limit ${req.query.limitnum}`, (error, results, fields) => {
                 if (error) throw error;
@@ -139,5 +140,34 @@ module.exports = function(app)
             res.render('pages/list.ejs', {data: {results: req.session.qres}}); 
         }    
     }); 
+
+    function majorquery(req, res){
+        console.log("Table request");
+        console.log(req.body);
+        //console.log(req.query);
+        var offsetval = (((parseInt(req.body.page)-1) * parseInt(req.body.size)));
+        const promiseconn = conn.connection.promise();
+        async function getRowCount() {
+            let rowscount = await promiseconn.query(`select count(*) from ${process.env.DB_NAME}.${process.env.DB_TABLE}`);
+            //console.log(rowscount);
+            return rowscount;
+        }
+        getRowCount().then(data => { 
+            var maxpages = Math.ceil(parseInt(data[0][0]['count(*)'])/(parseInt(req.body.size)));
+            conn.connection.query(`select * from ${process.env.DB_NAME}.${process.env.DB_TABLE} limit ${req.body.size} offset ${offsetval}`, (error, results, fields) => {
+                if (error) throw error;
+                res.send({data: results, last_page: maxpages})
+            });
+        });
+    }
+
+    app.post('/tabledata', (req, res) => {
+        
+        
+           majorquery(req, res);
+      
+        
+        
+    })
 }
 

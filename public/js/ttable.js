@@ -10,14 +10,19 @@ var result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 var rowindices = [];
 
 var table = new Tabulator("#table", {
+	maxHeight: 800,
 	layout: "fitData",
 	addRowPos: "top",
-	pagination: "local",
-	paginationSize: 10,
-	paginationSizeSelector:[5, 10, 15, 20, 25],
+	pagination: "remote",
+	paginationSize: 25,
+	paginationSizeSelector: [5, 10, 15, 20, 25, 50, 100, 150],
+	ajaxURL: "/tabledata",
+	ajaxConfig: "POST",
+	ajaxContentType: "json",
+	paginationButtonCount: 15,
 	initialSort: [{
 		column: "name",
-		dir: "asc"
+		dir: "desc"
 	}, ],
 	downloadConfig:{
         columnGroups: true, 
@@ -77,8 +82,6 @@ var table = new Tabulator("#table", {
 			field: "mallname",
 			editor: "autocomplete",
 			editorParams: {
-				displayAllSearchResults: true,
-				emptyPlaceholder:"(No matching results found)",
 				displayAllSearchResults: true,
 				emptyPlaceholder:"(No matching results found)",
 				values: {},
@@ -815,7 +818,7 @@ var table = new Tabulator("#table", {
 	]
 });
 
-table.setData(result).then(() => {
+table.setData("/tabledata").then((response) => {
 		
 })
 .catch((err) => {
@@ -929,12 +932,8 @@ $(document).ready(function () {
 
 	// reset modal
 	document.getElementById("resettablebtn").addEventListener("click", function () {
-		$('#resetModal').modal({
-			show: true,
-			keyboard: true,
-			focus: true,
-			handleUpdate: true
-		});
+		
+		table.setData("/tabledata");
 	});
 
 	document.getElementById("resetmodalbtn").addEventListener("click", function () {

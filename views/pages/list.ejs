@@ -58,14 +58,14 @@
 
         
 <body class="container-fluid">
-
     <span id="results" style="display: none;"><%= data.results %></span>
       <div class="btngroup flex-container">
         <button id="insertrowbtn" type="button" class="btn"><i class="fa fa-plus fa-2x" style="padding-bottom:10px;"></i><figcaption class="caption"> Insert Row</figcaption> </button>
         <button id="deleterowbtn" type="button" class="btn"><i class="fa fa-minus  fa-2x"></i><figcaption class="caption">Delete Row(s)</figcaption></button>
         <button id="filterbtn" type="button" data-toggle="modal" data-target="#filterModal" class="btn"><i class="fa fa-filter fa-2x"></i><figcaption class="caption">Filter Table</figcaption></button>
         <button id="download" type="button" class="btn" ><i class="fa fa-download fa-2x"></i><figcaption class="caption">Export Excel Sheet</figcaption></button>
-        <button id="resettablebtn" type="button" data-toggle="modal" data-target="#resetModal" class="btn"><i class="fa fa-redo fa-2x"></i><figcaption class="caption">Reset table</figcaption></button>
+        <button id="resettablebtn" type="button" class="btn"><i class="fa fa-redo fa-2x"></i><figcaption class="caption">Reset table</figcaption></button>
+
       </div>
       
       
@@ -127,10 +127,10 @@
         
       </div>
       <div class="modal-body">
-        <form action="/list/filter" method="get">
+        <form action="/tabledata" method="post">
           <div class="form-group">  
             <label for="limitinputval">Limit columns to: </label>
-            <input type="number" min='1' class="form-control" id="limitinputval" placeholder="Enter number" name="limitnum">
+            <input type="number" min='1' class="form-control" id="limitinputval" placeholder="Enter number" name="size">
             <div class="inforeset"><i class="fa fa-info-circle fa-sm" style="padding-top: 5px;" aria-hidden="true"></i><small style="padding-left: 5px; padding-top: 5px;">Click Retrieve Table without entering a limit to fetch all rows.</small>
             </div>
           </div>  
