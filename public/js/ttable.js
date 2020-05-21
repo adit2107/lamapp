@@ -10,15 +10,13 @@ var result = JSON.parse(bytes.toString(CryptoJS.enc.Utf8));
 var rowindices = [];
 
 var table = new Tabulator("#table", {
-	maxHeight: 800,
+	maxHeight: 1000,
 	layout: "fitData",
 	addRowPos: "top",
 	pagination: "remote",
+	ajaxContentType: "json",
 	paginationSize: 25,
 	paginationSizeSelector: [5, 10, 15, 20, 25, 50, 100, 150],
-	ajaxURL: "/tabledata",
-	ajaxConfig: "POST",
-	ajaxContentType: "json",
 	paginationButtonCount: 15,
 	initialSort: [{
 		column: "name",
@@ -818,14 +816,13 @@ var table = new Tabulator("#table", {
 	]
 });
 
-table.setData("/tabledata").then((response) => {
-		
+table.setData("/tabledata", {"page": 1, "size": 25}, "POST").then((response) => {
+	table.redraw(true);
 })
 .catch((err) => {
 console.log("err", err);
 });
 
-table.redraw(true);
 // Update cells
 function updateData(celldata) {
 
@@ -927,13 +924,27 @@ $(document).ready(function () {
 
 	// Download CSV
 	document.getElementById("download").addEventListener("click", function () {
-		table.download("xlsx", "POIData.xlsx", {sheetName: "FilteredData"});
+		table.setData("/tabledata", {"download": "all"}, "POST")
+		.then((response)=> {
+			console.log(`DLING`);
+			
+			table.download("xlsx", "data.xlsx", {sheetName: "FilteredData"}, "all");
+		})
+		.then(()=> {
+		table.setPageSize(25);
+		table.setData("/tabledata", {}, "POST");
+		table.redraw(true);
+		})
+		.catch((err)=> {
+			console.log(`Error downloading ${err}`)
+		})
 	});
 
 	// reset modal
 	document.getElementById("resettablebtn").addEventListener("click", function () {
-		
-		table.setData("/tabledata");
+		table.setPageSize(25);
+		table.setData("/tabledata", {}, "POST");
+		table.redraw(true);
 	});
 
 	document.getElementById("resetmodalbtn").addEventListener("click", function () {
@@ -1036,23 +1047,19 @@ $(document).ready(function () {
 			}
 		}
 
-
-		fetch('/list', {
-				method: 'POST',
-				body: JSON.stringify(selectedopts),
-				headers: {
-					'Content-Type': 'application/json'
-				}
-			}).then(res => res.text())
-			.then(response => {
-				window.location='/list/filter';
-			})
-			.catch(error => console.error('Error:', error));
+		table.setData('/tabledata' ,{selectedopts}, "POST").then(() => {
+			console.log("got back");
+			table.redraw(true);
+			selectedopts.col1.splice(0, );
+			selectedopts["col2"] = {};
+			$("#colsvalues").html('').selectpicker('refresh');
+			$('.selectpick').selectpicker('destroy');
+		})
+		.catch((err) => {
+			console.log("error", err);
+		})
 					
-		selectedopts.col1.splice(0, );
-		selectedopts["col2"] = {};
-		$("#colsvalues").html('').selectpicker('refresh');
-		$('.selectpick').selectpicker('destroy');
+	
 	});
 
 	document.getElementById("modal-close").addEventListener("click", function () {

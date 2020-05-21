@@ -119,55 +119,37 @@ module.exports = function(app)
             querygenerator.generateQuery(req, res);
         }  
     });
-    
-    app.get('/list/filter', (req,res) => {
-        if(req.query.limitnum > '0'){
-            console.log("LIMITING");
-            req.session.limitnum = req.query.limitnum
-                 conn.connection.query(`select * from ${process.env.DB_NAME}.${process.env.DB_TABLE} limit ${req.query.limitnum}`, (error, results, fields) => {
-                if (error) throw error;
-                var cipher = encryptdata.encryptdata(results);
-                res.render('pages/list.ejs', {data: {results: cipher}});  
-            });
-        } else if (req.query.limitnum == '') {
-            req.session.limitnum = req.query.limitnum
-                 conn.connection.query(`select * from ${process.env.DB_NAME}.${process.env.DB_TABLE}`, (error, results, fields) => {
-                if (error) throw error;
-                var cipher = encryptdata.encryptdata(results);
-                res.render('pages/list.ejs', {data: {results: cipher}});  
-            });
-        }else {
-            res.render('pages/list.ejs', {data: {results: req.session.qres}}); 
-        }    
-    }); 
 
-    function majorquery(req, res){
-        console.log("Table request");
-        console.log(req.body);
-        //console.log(req.query);
-        var offsetval = (((parseInt(req.body.page)-1) * parseInt(req.body.size)));
-        const promiseconn = conn.connection.promise();
-        async function getRowCount() {
-            let rowscount = await promiseconn.query(`select count(*) from ${process.env.DB_NAME}.${process.env.DB_TABLE}`);
-            //console.log(rowscount);
-            return rowscount;
+    app.post('/tabledata', async (req, res) => {
+       
+        if (req.body.hasOwnProperty('page') && req.body.hasOwnProperty('size') && req.body.hasOwnProperty('selectedopts')){
+            req.session.filtervalues = req.body.selectedopts;
+            await querygenerator.generateQuery(req, res);
+
+        } else if (req.body.hasOwnProperty('download') && req.body.hasOwnProperty('page') && req.body.hasOwnProperty('size')){
+           await querygenerator.generateQuery(req,res);
         }
-        getRowCount().then(data => { 
-            var maxpages = Math.ceil(parseInt(data[0][0]['count(*)'])/(parseInt(req.body.size)));
-            conn.connection.query(`select * from ${process.env.DB_NAME}.${process.env.DB_TABLE} limit ${req.body.size} offset ${offsetval}`, (error, results, fields) => {
-                if (error) throw error;
-                res.send({data: results, last_page: maxpages})
-            });
-        });
-    }
-
-    app.post('/tabledata', (req, res) => {
+        else {
+            console.log("Table request");
+            console.log(req.body);
+            
+            var offsetval = (((parseInt(req.body.page)-1) * parseInt(req.body.size)));
+            const promiseconn = conn.connection.promise();
+            async function getRowCount() {
+                let rowscount = await promiseconn.query(`select count(*) from ${process.env.DB_NAME}.${process.env.DB_TABLE}`);
+                return rowscount;
+            }
+            getRowCount().then(data => { 
+                var maxpages = Math.ceil(parseInt(data[0][0]['count(*)'])/(parseInt(req.body.size)));
+                conn.connection.query(`select * from ${process.env.DB_NAME}.${process.env.DB_TABLE} limit ${req.body.size} offset ${offsetval}`, (error, results, fields) => {
+                    if (error) throw error;
+                    res.send({data: results, last_page: maxpages})
+                });
+            });  
+        }
         
+       
         
-           majorquery(req, res);
-      
-        
-        
-    })
+    });
 }
 
