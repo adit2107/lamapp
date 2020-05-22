@@ -816,7 +816,7 @@ var table = new Tabulator("#table", {
 	]
 });
 
-table.setData("/tabledata", {"page": 1, "size": 25}, "POST").then((response) => {
+table.setData("/tabledata", {}, "POST").then((response) => {
 	table.redraw(true);
 })
 .catch((err) => {
@@ -850,13 +850,18 @@ function deleteRow(rowindices) {
 			headers: {
 				'Content-Type': 'application/json'
 			}
-		}).then(res => res.text())
+		}).then(res => res.json())
 		.then(response => {
 			console.log("Got page and size");
 			console.log(response);
 			table.deleteRow(rowindices);
 			rowindices.splice(0, rowindices.length);
-			table.replaceData('/tabledata', {}, "POST");
+			return response
+		})
+		.then((response)=> {
+			console.log("redirecting");
+			console.log(typeof(response));
+			table.setPage(response["page"]);
 			table.redraw(true);
 		})
 		.catch(error => console.error('Error:', error));
