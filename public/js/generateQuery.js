@@ -12,7 +12,7 @@ var knex = require('knex')({
   });
 
 exports.generateQuery = (queryparams, res) => {
-
+   
     var values = [];
     
     var query = `SELECT ?? FROM ${process.env.DB_NAME}.${process.env.DB_TABLE}`;
@@ -35,6 +35,7 @@ exports.generateQuery = (queryparams, res) => {
             query: query,
             values: values  
         };
+      
         return result;
     }
 

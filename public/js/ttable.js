@@ -839,20 +839,30 @@ function updateData(celldata) {
 
 // Delete cells
 function deleteRow(rowindices) {
+	let delrows = {
+		pagesize: table.getPageSize(),
+		page: table.getPage(),
+		rowindices
+	}
 	fetch('/list', {
 			method: 'DELETE',
-			body: JSON.stringify(rowindices),
+			body: JSON.stringify(delrows),
 			headers: {
 				'Content-Type': 'application/json'
 			}
 		}).then(res => res.text())
 		.then(response => {
-
+			console.log("Got page and size");
+			console.log(response);
 			table.deleteRow(rowindices);
 			rowindices.splice(0, rowindices.length);
+			table.replaceData('/tabledata', {}, "POST");
 			table.redraw(true);
 		})
 		.catch(error => console.error('Error:', error));
+
+	
+
 }
 // Add empty row
 function addEmptyRow() {
@@ -926,7 +936,6 @@ $(document).ready(function () {
 	document.getElementById("download").addEventListener("click", function () {
 		table.setData("/tabledata", {"download": "all"}, "POST")
 		.then((response)=> {
-			console.log(`DLING`);
 			
 			table.download("xlsx", "data.xlsx", {sheetName: "FilteredData"}, "all");
 		})
@@ -1048,7 +1057,6 @@ $(document).ready(function () {
 		}
 
 		table.setData('/tabledata' ,{selectedopts}, "POST").then(() => {
-			console.log("got back");
 			table.redraw(true);
 			selectedopts.col1.splice(0, );
 			selectedopts["col2"] = {};

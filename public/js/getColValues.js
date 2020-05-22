@@ -33,6 +33,9 @@ function retColValues (colname, newclick, selectedopts, selectedcolvals) {
 		case 'Store - Common Name':
 			columnVals(colname, newclick, selectedopts, selectedcolvals);
 			break;
+		case 'Store - Full Name':
+			columnVals(colname, newclick, selectedopts, selectedcolvals);
+			break;
 		case 'Brand - Single/Multi':
 			columnVals(colname, newclick, selectedopts, selectedcolvals);
 			break;

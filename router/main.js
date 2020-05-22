@@ -85,12 +85,20 @@ module.exports = function(app)
        
     });
 
-    app.delete('/list', (req,res) => {
-        var data = [req.body];
-        conn.connection.query('DELETE FROM ' + process.env.DB_NAME +'.'+ process.env.DB_TABLE + ' WHERE serial IN (' + data +')', (error, results, fields) => {
-            if (error) throw error;
-            res.send("Deleted rows");
-        });
+    app.delete('/list', async (req,res) => {
+    var data = [req.body];  
+    console.log(data);      
+       conn.connection.promise().query('DELETE FROM ' + process.env.DB_NAME +'.'+ process.env.DB_TABLE + ' WHERE serial IN (' + data[0].rowindices +')')
+       .then(([rows, fields]) => {
+        return conn.connection.promise().query(`ALTER TABLE ${process.env.DB_NAME}.${process.env.DB_TABLE} DROP serial`);
+       })
+       .then(([rows, fields])=> {
+        return conn.connection.promise().query(`ALTER TABLE ${process.env.DB_NAME}.${process.env.DB_TABLE} ADD serial int NOT NULL AUTO_INCREMENT PRIMARY KEY FIRST`);
+       })
+       .then(([rows, fields]) => {
+           res.send({page: data[0].page, pagesize: data[0].pagesize});
+       })
+       .catch(console.log);
     });
 
     app.post('/search', (req, res) => {
@@ -111,7 +119,6 @@ module.exports = function(app)
         if (Object.keys(req.body).length === 0 ) {
             conn.connection.query(`INSERT INTO ${process.env.DB_NAME}.${process.env.DB_TABLE} () VALUES ()`, (error, results, fields) => {
                 if (error) throw error;
-                
                 res.json(results);
             } );
         } else {
