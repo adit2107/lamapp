@@ -6,15 +6,14 @@ const cookieParser = require('cookie-parser')
 const fetch = require('node-fetch');
 const morgan = require('morgan');
 
-
 // Important stuff
 authcontroller = require('../public/js/CognitoAuthController');
 querygenerator = require('../public/js/generateQuery');
 encryptdata = require('../public/js/encryptdata');
 
-
 module.exports = function(app)
 {
+    
     app.use(morgan('dev', {
         skip: (req, res) => { return res.statusCode < 400}
     }));
