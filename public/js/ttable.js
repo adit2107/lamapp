@@ -852,22 +852,15 @@ function deleteRow(rowindices) {
 			}
 		}).then(res => res.json())
 		.then(response => {
-			console.log("Got page and size");
-			console.log(response);
 			table.deleteRow(rowindices);
 			rowindices.splice(0, rowindices.length);
 			return response
 		})
-		.then((response)=> {
-			console.log("redirecting");
-			console.log(typeof(response));
-			table.setPage(response["page"]);
+		.then((resp)=> {
+			table.setPage(resp["page"]);
 			table.redraw(true);
 		})
-		.catch(error => console.error('Error:', error));
-
-	
-
+		.catch(error => console.error('Error:', error));	
 }
 // Add empty row
 function addEmptyRow() {
@@ -877,7 +870,6 @@ function addEmptyRow() {
 			headers: {}
 		}).then(res => res.json())
 		.then(response => {
-			var colDefs = table.getColumnDefinitions();
 			table.addRow({
 				serial: response.insertId,
 				mallname: '',
