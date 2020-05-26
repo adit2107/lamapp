@@ -15,7 +15,7 @@ module.exports = function(app)
 {
     
     app.use(morgan('dev', {
-        skip: (req, res) => { return res.statusCode < 400}
+        skip: (req, res) => { return res.statusCode < 300}
     }));
 
     app.use(bodyParser.json() );   
