@@ -1,30 +1,23 @@
 require('dotenv').config()
 
 const express = require('express');
-var fs = require('fs');
-var https = require('https');
 const app = express();
+const helmet = require('helmet');
 const mysql = require('mysql2');
 const bodyParser = require('body-parser');
 const flash = require('express-flash');
 const compression = require('compression');
+var spdy = require('spdy'), fs = require('fs');
 var port = process.env.PORT || 3030;
-CognitoExpress = require("cognito-express")
+const path = require('path');
+
+app.use(helmet());
+
 authenticatedRoute = express.Router()
 
 app.use(compression({level: 9}));
 require('./router/main')(app);
-function forceHttps(req, res, next){
-    const xfp =
-      req.headers["X-Forwarded-Proto"] || req.headers["x-forwarded-proto"];
-    if (xfp === "http") {
-      res.redirect(301, `https://${req.hostname}${req.url}`);
-    } else {
-      next();
-    }
- }
 
-app.use(forceHttps);
 
 // setting view engine
 app.set('views',__dirname + '/views');
@@ -60,8 +53,15 @@ const connection = mysql.createConnection({
     }
 });
   
-app.listen(port, () => {
-  console.log(`Server running on: ${port}`);
-});
+// app.listen(port, () => {
+//   console.log(`Server running on: ${port}`);
+// });
+
+spdy.createServer({
+  key: fs.readFileSync(path.resolve(__dirname, "public/files/localhost.key")),
+  cert: fs.readFileSync(path.resolve(__dirname, "public/files/localhost.crt"))
+}, app).listen(port, () => {
+  console.log(`HTTP2 server running on: ${port}`);
+})
 
 exports.connection = connection;
