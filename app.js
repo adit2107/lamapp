@@ -11,6 +11,14 @@ var spdy = require('spdy'), fs = require('fs');
 var port = process.env.PORT || 3030;
 const path = require('path');
 
+const basicPino = require('pino')
+const basicPinoLogger = basicPino({ prettyPrint: true })
+const expressPino = require('express-pino-logger')({
+  logger: basicPinoLogger
+})
+
+const logger = expressPino.logger;
+
 app.use(helmet());
 
 authenticatedRoute = express.Router()
@@ -56,12 +64,13 @@ const connection = mysql.createConnection({
 // app.listen(port, () => {
 //   console.log(`Server running on: ${port}`);
 // });
-
+// TODO: Add NGINX config on EB
 spdy.createServer({
   key: fs.readFileSync(path.resolve(__dirname, "public/files/localhost.key")),
   cert: fs.readFileSync(path.resolve(__dirname, "public/files/localhost.crt"))
 }, app).listen(port, () => {
-  console.log(`HTTP2 server running on: ${port}`);
+  //console.log(`HTTP2 server running on: ${port}`);
+  logger.info(`Server log ${port}`)
 })
 
 exports.connection = connection;

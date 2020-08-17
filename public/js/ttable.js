@@ -897,12 +897,17 @@ function addEmptyRow() {
 				floor: '',
 				distribution: '',
 				area: ''  
-
 			}, true);
 			table.redraw(true);
 		})
 		.catch(error => console.error('Error:', error));
 }
+
+function addColumn(){
+	
+}
+
+
 
 $(document).ready(function () {
 	document.getElementById("deleterowbtn").addEventListener("click", function () {

@@ -136,9 +136,6 @@ module.exports = function(app)
            await querygenerator.generateQuery(req,res);
         }
         else {
-            console.log("Table request");
-            console.log(req.body);
-            
             var offsetval = (((parseInt(req.body.page)-1) * parseInt(req.body.size)));
             const promiseconn = conn.connection.promise();
             async function getRowCount() {
@@ -153,9 +150,6 @@ module.exports = function(app)
                 });
             });  
         }
-        
-       
-        
     });
 }
 
